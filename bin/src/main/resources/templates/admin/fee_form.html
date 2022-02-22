@@ -1,0 +1,198 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Registration Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+ <link rel="stylesheet" th:href="@{admin/css/global.css}">
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+				
+				 <div class="container-fluid px-lg-4">
+                        <div class="row">
+                            <!-- column start -->
+                            <div class="col-md-12 mt-4">
+                                <div class="card">
+                                    <h1 class="text-capitalize text-center mt-3 title-fees">Fees Package Structure
+                                        Insert</h1>
+                                    <hr>
+                                    <!-- Main content start here -->
+                                    <div class="main- fees-content flex">
+                                        <p class="ml-4 float-left">Name: [[${student.firstName+' '+student.middleName+' '+student.lastName}]]</p>
+                                        <p class="mr-4 float-right">Program: [[${student.program.name}]]</p>
+                                        <p class=" text-center"> Batch: [[${student.registrationyear.name}]]</p>
+                                    </div>
+                                   <form  th:action="@{/admin/fee/save}" method="post" enctype="multipart/form-data" th:object="${fee}">
+                                      <input type="hidden" name="student_id" th:value="${student_id}" >
+                                      <input type="hidden" name="sortField"
+													th:value="${sortField}"> <input type="hidden"
+													name="sortDir" th:value="${sortDir}"> <input
+													type="hidden" name="page" th:value="${pageNo}"> <input
+													type="hidden" name="year" th:value="${year_id}"> <input
+													type="hidden" name="program" th:value="${program_id}">
+                                     <div class="row">
+                                        <div class="col-md-12">
+                                            <div class="form-group ml-4">
+                                                <label class="font-weight-bold" for="pacakage__total">Full
+                                                    Schoolarship
+                                               <input type="checkbox" class="ml-3 btn " th:field="*{schoolarship}" id="full_schoolarship" 
+                                                    placeholder="Enter Amount">
+                                                </label>
+                                                
+                                            </div>
+                                        </div>
+                                           <div class="col-md-6">
+                                            <div class="form-group ml-4">
+                                                <label class="font-weight-bold" for="pacakage__total">Total
+                                                    Package</label>
+                                                <input type="number" class="form-control" id="pacakage__total"
+                                                    placeholder="Total package = total fees"  >
+                                            </div>
+                                        </div>
+                                    
+                                    </div>
+
+                                    <h4 class="text-center font-weight-bold text-capitalize">All semesters Fees</h4>
+                        
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group ml-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Semester I</label>
+                                                <input type="number" class="form-control amount" th:field="*{semesterFirst}" name="semester1" id="sem1"
+                                                    placeholder="Enter Amount">
+                                            </div>
+                                            <div class="form-group ml-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Semester II</label>
+                                                <input type="number" class="form-control amount"  th:field="*{semesterSecond}"  id="sem2"
+                                                    placeholder="Enter Amount">
+                                            </div>
+                                            <div class="form-group ml-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Semester III</label>
+                                                <input type="number" class="form-control amount"  th:field="*{semesterThird}"  id="sem3"
+                                                    placeholder="Enter Amount">
+                                            </div>
+                                        </div>
+                                          <div class="col-md-4">
+                                            <div class="form-group ml-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Semester IV</label>
+                                                <input type="number" class="form-control amount"  th:field="*{semesterFourth}"  id="sem4"
+                                                    placeholder="Enter Amount">
+                                            </div>
+
+                                            <div class="form-group ml-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Semester V</label>
+                                                <input type="number" class="form-control amount"  th:field="*{semesterFifth}"  id="sem5"
+                                                    placeholder="Enter Amount">
+                                            </div>
+                                            <div class="form-group ml-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Semester VI</label>
+                                                <input type="number" class="form-control amount"  th:field="*{semesterSixth}"  id="sem6"
+                                                    placeholder="Enter Amount">
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-4">
+                                            <div class="form-group mr-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Semester VII</label>
+                                                <input type="number" class="form-control amount"  th:field="*{semesterSeventh}"  id="sem7"
+                                                    placeholder="Enter Amount">
+                                            </div>
+
+                                              <div class="form-group mr-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Semester VIII</label>
+                                                <input type="number" class="form-control amount"  th:field="*{semesterEight}"  id="sem8"
+                                                    placeholder="Enter Amount">
+                                            </div>
+                                                
+                                           <div class="mr-4">
+                                                <label class="font-weight-bold" for="pacakage__sem1">Total Fees</label>
+                                                <input class="form-control" type="number" id="total" disabled />
+                                           </div>
+
+                                       <div class="col-md-4 mt-4">
+                                            <span class="font-weight-bold text-center">OR</span>
+                                        </div>
+
+                                        <div>
+                                            <label class="mt-3">
+                                                <input type='checkbox' id='btn1' value='transfer'/> Make Equal in All Semester
+                                            </label>
+                                        </div>
+                                  </div>
+                             </div>
+
+                                   <div class="form-group ml-4">
+                                        <label class="font-weight-bold" for="exampleInputFile">
+                                            Upload Agreement
+                                        </label>
+                                        <input type="file"  id="exampleInputFile" name="agreement">
+                                    </div>
+
+                                    <div class="button-for-pay">
+                                        <button th:if="*{id==null}" type="submit" disabled="disabled"  id="form_submit" class="btn btn-primary shadow-sm ml-4 mb-3">
+                                            Submit
+                                        </button>
+                                         <button th:unless="*{id==null}" type="submit" disabled="disabled"  id="form_submit" class="btn btn-primary shadow-sm ml-4 mb-3">
+                                            Update
+                                        </button>
+                                    </div>
+                            </form>
+                          </div>
+                        </div>
+                                <!-- Main content end here -->
+                                <!-- column end -->
+                          </div>
+                        </div>
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+    <input type="hidden" name="url" th:value="@{/program/findbyid}">
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+		<script>
+	
+	$('#name').keyup(function() {
+	    var search = $('#name').val();
+	    
+	    $.ajax({
+	    type: 'get',
+        url: '/program/findbyid',
+     
+        dataType: "json"
+	    })
+	})
+	
+	</script>
+	<!-- end js -->
+
+
+</body>
+
+</html>

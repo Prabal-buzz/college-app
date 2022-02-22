@@ -1,0 +1,113 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Registration Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid px-lg-4">
+                        <div class="row">
+                            <!--    Form start -->
+                            <div class="col-md-12  mt-4">
+                                <div class="card pt-4 pb-2">
+                                    <div class="box box-primary">
+                                        <h1 class="h3 mb-0 text-dark-800 float-left ml-5">Add marks</h1>
+                                      
+                                        <!-- form start -->
+                                        <form class="ml-5 mr-5" role="form" th:action="@{/admin/result/marks/save}"  th:object="${result}" method="post">
+                                          <input type="hidden" th:field="*{id}" th:value="*{id}" >
+                                          <div class="box-body row mt-4">
+                                          
+                                            <div class="col-md-6">
+                                              <div class="form-group">
+                                                 <label>Student Email</label>
+                                                 <input type="text" class="form-control" name="email" th:value="${email}">
+                                               </div>
+                                            </div>
+                                              <div class="col-md-6">
+                                              <div class="form-group">
+                                                 <label>Student Symbolno</label>
+                                                 <input type="text" class="form-control" th:field="*{symbolNo}" >
+                                               </div>
+                                            </div>
+                                            
+                                            <div class="col-md-3">                
+                                              <div class="form-group">
+                                                 <label>Full Marks</label>
+                                                 <input type="number" class="form-control" th:field="*{fullMark}">
+                                            </div>
+                                           </div>
+
+                                            <div class="col-md-3">       
+                                              <div class="form-group">
+                                                 <label>Pass Marks</label>
+                                                 <input type="number" class="form-control" th:field="*{passMark}">
+                                               </div>
+                                            </div>
+                                            <div class="col-md-3 ">
+                                                <div class="form-group ">
+                                                	<label>Obtain Marks</label>
+                                                <input type="number" class="form-control" th:field="*{obtainMark}">							            </div>
+									            </div>
+                                            <input type="hidden" name="category_id" th:value="${category_id}">
+
+                                             <div class="col-md-2 mt-3">
+                                                <div class="form-group ">
+                                                	<div class="box-footer mb-5 ml-3">
+                                                <button type="submit" class="btn btn-primary mt-2 form-control mt-2">Submit</button>
+                                            </div>							            
+                                            </div>
+									            </div>
+                                            
+
+                                            <!-- /.box-body -->
+
+                                            
+                                        </form>
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<!-- end js -->
+
+
+</body>
+
+</html>

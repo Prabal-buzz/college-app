@@ -1,0 +1,113 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Admission Fee</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+<style type="text/css">
+.table {
+	border: 2px solid #007bff;
+	border-left: 30px solid #007bff;
+}
+</style>
+
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+					<div class="container-fluid px-lg-4">
+						<div class="row">
+
+							<div class="col-md-12 mt-3" th:if="${success}">
+								<div class="card">
+									<div class="alert alert-primary mt-3" role="alert"
+										th:text="${success}"></div>
+								</div>
+							</div>
+							<!-- column start -->
+							<div class="col-md-12 mt-4">
+								<div class="card">
+
+
+
+									<div class="container">
+										<a th:href="@{/admin/fee}" class=" btn btn-sm btn-primary "><i
+											class="fas fa-arrow-left"></i> Back</a>
+										<div class="col-md-12 mt-lg-4 ">
+											<!-- Page Heading -->
+
+											<div
+												class="d-sm-flex align-items-center justify-content-between ">
+												<h1 class="h3 mb-0 text-gray-800">Admission Fee</h1>
+
+												
+											</div>
+										</div>
+
+										<div class="row col-md-12 col-md-offset-2 custyle ">
+											<table class="table mt-3">
+												<tbody>
+													<tr class="fee mt-1"
+														th:each="admissionFee:${admissionFeeLists}">
+														<th class="text-center">[[${admissionFee.program.name}]]</th>
+														<th class="text-center">Rs [[${admissionFee.amount}]]
+														</th>
+														<th class="text-center"><a
+															th:href="@{/admin/admission/fee/update/{id}(id=${admissionFee.id})}"
+															class="btn btn-sm btn-primary">change</a></th>
+													</tr>
+													
+													<tr class="fee mt-1" th:if="${admissionFeeLists.isEmpty}">
+														<th class="text-center"><a th:href="@{/admin/admission/fee-form}"
+													class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm ">No Data</a></th>
+														
+													</tr>
+													
+													
+</body>
+
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!--   Second Table -->
+
+
+
+</div>
+<!-- Begin Page Content -->
+
+<!-- container-fluid -->
+</div>
+</div>
+</div>
+<!--page-content-wrapper -->
+</div>
+<!--wrapper -->
+
+
+<!-- js -->
+<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+
+<!-- end js -->
+
+
+</body>
+
+</html>

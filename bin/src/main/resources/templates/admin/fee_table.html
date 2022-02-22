@@ -1,0 +1,187 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+				<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					<!-- Begin Page Content -->
+					<div class="container-fluid px-lg-4">
+
+						<div class="row">
+							<!-- column start -->
+							<div class="col-md-12 mt-4">
+								<div class="card">
+									<!-- column start -->
+
+									<div class="container table-responsive mt-2">
+											<div class="d-sm-flex align-items-center justify-content-between mt- mb-0 box-header">
+											<h1 class="h3 mb-0 text-gray-800 ">Student Fee</h1>
+    								</div>
+										
+								
+								<div class="alert alert-primary" role="alert"
+									th:text="${success}" th:if="${success}"></div>	
+								<div class="alert alert-danger" role="alert" th:text="${error}"
+									th:if="${error}"></div>
+										<form th:action="@{'/admin/fee/page/'+${currentPage}}"
+											method="get" class="mt-0">
+											<input type="hidden" name="sortField" th:value="${sortField}">
+											<input type="hidden" name="sortDir" th:value="${sortDir}">
+											<div class="row ml-5 mr-5 ">
+												<div class="row col-md-12 ml-1">
+													<div class="form-group">
+													  <a th:href="@{/admin/admisssion-fee}" class="btn btn-primary">Admission Fee</a>
+													</div>
+													<div class="form-group ml-3" >
+													  <a th:href="@{/admin/security-fee}" class="btn btn-success">Security Deposit</a>
+													</div>
+													<!--  	<div class="form-group ml-3" >
+													  <a href="" class="btn btn-primary">Form Fee</a>
+													</div> --> 
+													
+													     
+												</div>
+											
+												<div class="col-md-4">
+													<div class="form-group">
+														<label>Select Year</label> 
+														<select class="form-control"
+															name="year">
+															<option value="0" selected="true" disabled="true">Year</option>
+															<sapan th:each="year:${listyears}">
+															<option 
+																  th:if="${year.isActive==true && year.id==year_id}" th:value="${year.id}" selected>[[${year.name}]]</option>
+															<option
+																th:if="${year.isActive==true}" th:unless="${year.id==year_id}" th:value="${year.id}">[[${year.name}]]</option>
+														 </sapan>
+														</select>
+													</div>
+												</div>
+
+												<div class="col-md-4">
+													<div class="form-group ">
+														<label>Select Program</label> <select class="form-control"
+															name="program">
+															<option value="0" selected="true" disabled="true">Programs</option>
+															<span th:each="program:${listprograms}">
+															<option th:if="${program.id==program_id}"
+																th:value="${program.id}" selected>[[${program.name}]]</option>
+																<option th:unless="${program.id==program_id}"
+																th:value="${program.id}">[[${program.name}]]</option>
+																</span>
+														</select>
+													</div>
+												</div>
+											
+												<div class="col-md-4 go_button">
+													<button class="btn btn-primary btn-danger">
+														<i class="fa fa-search"></i>
+													</button>
+												</div>
+										</form>
+
+										<table class="table table-bordered table-hover ml-3">
+											<thead class="thead-default">
+												<tr>
+													<th scope="col">SN</th>
+													<th scope="col">Name</th>
+													<th scope="col">Batch</th>
+													<th scope="col">Action</th>
+												</tr>
+											</thead>
+											<tbody>
+												<tr th:each="student,status:${listStudents}" >
+												
+													<td scope="row">[[${(pageSize*(currentPage-1))+status.count}]]</td>
+													<td style="font-weight:none">[[${student.firstName}]] [[${student.middleName}]]
+														[[${student.lastName}]]</td>
+													<td>[[${student.registrationyear.name}]]</td>
+													<td><a th:href="@{'/admin/fee/form/'+${student.id}+'?page='+${currentPage}+'&sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}" class="ml-3 "> <i
+															class="fa fa-edit btn btn-info btn-sm"></i></a>
+														 <a th:href="@{'/admin/payment/'+${student.id}}"	class="ml-3"><i	class="fas fa-money-bill btn btn-danger btn-sm"></i></a>
+														  <a href=""	class="ml-3"><i	class="fa fa-history btn btn-danger btn-sm"></i></a>
+															
+												</td>
+												</tr>
+												
+												<tr th:if="${listStudents.isEmpty}" >
+												<th colspan=4 class="text-center">  No Data</th>
+													
+												</tr>
+												
+											</tbody>
+										</table>
+										<nav aria-label="...">
+											<ul class="pagination ml-3">
+												<li th:if="${currentPage==1}" class="page-item disabled"><a
+													class="page-link" tabindex="-1" aria-disabled="true">Previous</a></li>
+												<li th:unless="${currentPage==1}" class="page-item "><a
+													class="page-link"
+													th:href="@{'/admin/fee/page/'+${currentPage-1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}"
+													tabindex="-1" aria-disabled="true">Previous</a></li>
+												<span th:each="i:${#numbers.sequence(1,totalPages)}">
+													<li th:if="${i==currentPage}" class="page-item active"><a
+														class="page-link"
+														th:href="@{'/admin/fee/page/'+${i}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}">[[${i}]]</a></li>
+													<li th:unless="${i==currentPage}" class="page-item "><a
+														class="page-link"
+														th:href="@{'/admin/fee/page/'+${i}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}">[[${i}]]</a></li>
+												</span>
+
+												<li th:if="${currentPage<totalPages}" class="page-item"><a
+													class="page-link"
+													th:href="@{'/admin/fee/page/'+${currentPage+1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}">Next</a>
+												</li>
+												<li th:unless="${currentPage<totalPages}"
+													class="page-item disabled"><a class="page-link"
+													th:href="@{'/admin/fee/page/'+${currentPage+1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}">Next</a>
+												</li>
+											</ul>
+										</nav>
+									</div>
+									<!-- column end -->
+
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+				<!-- container-fluid -->
+			</div>
+		</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+
+	<!-- end js -->
+
+
+</body>
+
+</html>

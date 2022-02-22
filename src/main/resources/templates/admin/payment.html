@@ -1,0 +1,1027 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+				<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+                   <!-- Begin Page Content -->
+                    <div class="container-fluid px-lg-4">
+                        <div class="row">
+                            <!-- column start -->
+                            <div class="col-md-12 mt-4">
+                                <div class="card">
+                                    <h1 class="text-capitalize text-center mt-2 title-fees">Fees Structure</h1>
+                                    <!-- Main content start here -->
+                                    <div class="main- fees-content flex">
+                                        <p class="ml-4 float-left">Name: [[${student.firstName+" "+student.middleName+" "+student.lastName}]]</p>
+                                        <p class="mr-4 float-right">Program: [[${student.program.name}]]</p>
+                                    </div>
+
+                                    <div class="semester-structure ">
+                                        <!-- First Semester -->
+                                        <hr>
+                                        <h4 class="ml-4 font-weight-bold float-left ml-4 mb-1">Semester I 
+                                        <i id="paid_sign" th:unless="${(student.program.securityFee.amount+student.fee.semesterFirst+student.program.admissionFee.amount)>(#aggregates.sum(paymentlistsFirst.![amount]))}"
+                                                class="fa fa-check-circle text-success" style="font-size:19px"
+                                                aria-hidden="true"></i>
+                                                <i id="due_sign" th:if="${(student.program.securityFee.amount+student.fee.semesterFirst+student.program.admissionFee.amount)>(#aggregates.sum(paymentlistsFirst.![amount]))}"
+                                                
+                                                class="fas fa-exclamation-triangle text-danger" style="font-size:19px"></i></h4>
+                                        <a th:href="@{'/admin/payment/bill/'+${student.fee.id}+'?semester='+1}" class="btn btn-purple shadow-sm float-right mr-4 mb-1 btn-sm"><i
+                                                class="fas fa-receipt text-white mr-1"></i>
+                                            Bill</a>
+                                    </div>
+                                    <hr>
+                                    <div class="box-body row">
+                                        <div class="col-md-6">
+                                            <div class="flex ml-4 items-fees">
+                                                <div class="admission_fee">
+                                                <input type="hidden" id="entered_by" value="" >
+                                                <input type="hidden" id="fee_id" th:value="${student.fee.id}" >
+                                                    <label for="test">Admission Fee:</label>
+                                                    <span class="ml-4">Rs.[[${student.program.admissionFee.amount}]]</span>
+                                                </div>
+                                                <div class="semester_fee">
+                                                    <label for="test">Semester Fee:</label>
+                                                    <span class="sp__1">Rs.[[${student.fee.semesterFirst}]]</span>
+                                                </div>
+                                                <div class="securiy_fee">
+                                                    <label for="test">Security Deposit:</label>
+                                                    <span class="sp__2">Rs.[[${student.program.securityFee.amount}]]</span>
+                                                </div>
+                                                <div class="checkbox flex-column">
+                                                    <label>Payment Mode: </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="checkMark11" name="mode" > Cash
+                                                    </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="checkMark1" name="mode" > Voucher
+                                                    </label>
+                                                </div>
+                                                <div class="form-group" style="display:none" id="form1">
+                                                    <label for="File">File input</label>
+                                                    
+                                                    <input class="ml-5" type="file" id="file_first" name="first_file">
+                                                   
+                                                </div>
+                                            
+
+                                                <div class="total_fee">
+                                                    <label for="test">Total:</label>
+                                                    <span class="sp__3">Rs.<span id="totaldue_first">[[${student.program.securityFee.amount+student.fee.semesterFirst+student.program.admissionFee.amount}]]</span></span>
+                                                </div>
+
+                                                <div class=" form-group amount__form">
+                                                    Amount: <input class="sp__4" type="number" 
+                                                        id="amount_first" placeholder="Enter Amount" >
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-md-6">
+                                            <p>Log:</p>
+                                            
+                                            <div class="log__dates1 mb-2"  th:each="payment:${paymentlistsFirst}" >
+                                             
+                                                <p>[[${payment.createdAt}]]</p>
+                                                <p th:if="${payment.mode=='cash'}">
+                                                <a
+                                                        class=" pb_custom"><i	class=" btn btn-success btn-sm mr-3"> Cash</i></a>
+                                                </p>
+                                                <p th:unless="${payment.mode=='cash'}">
+                                                <a
+                                                       class=" pb_custom "><i class="btn btn-success btn-sm ">Voucher</i></a>
+                                                 </p>
+                                                <p>[[${payment.amount}]]</p>
+                                                
+
+                                               
+                                            </div>
+                                              <span class="log__dates1 mb-2" id="payment_log1">
+                                                
+                                              </span>
+                                            <hr>
+                                        
+
+
+                                            <div class="due__paid">
+                                            
+                                            <div class="paid">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_first"><span th:if="${paymentlistsFirst!=null}">[[${#aggregates.sum(paymentlistsFirst.![amount])}]]</span><span th:if="${paymentlistsFirst.isEmpty()}">0</span></span></span>
+
+                                                </div>
+                                                <span th:if="${paymentlistsFirst.isEmpty()}">
+                                                <div class="due" >
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due">[[${student.program.securityFee.amount+student.fee.semesterFirst+student.program.admissionFee.amount}]]</span></span>
+                                                </div>
+                                                </span>
+                                               <span th:unless="${paymentlistsFirst.isEmpty()}">
+                                               
+                                                <div class="due" th:if="${((student.program.securityFee.amount+student.fee.semesterFirst+student.program.admissionFee.amount)-(#aggregates.sum(paymentlistsFirst.![amount]))>=0) }">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due">[[${(student.program.securityFee.amount+student.fee.semesterFirst+student.program.admissionFee.amount)-(#aggregates.sum(paymentlistsFirst.![amount])) }]]</span></span>
+                                                </div>
+                                               </span>
+                                                                                       
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-for-pay ml-2">
+                                        <span th:unless="${paymentlistsFirst.isEmpty()}">
+                                        <span th:if="${((student.program.securityFee.amount+student.fee.semesterFirst+student.program.admissionFee.amount)-(#aggregates.sum(paymentlistsFirst.![amount]))<=0) }">
+                                        
+                                        <button disabled onclick="pay_first()" id="payfirst_button"  href="#" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                         </span>
+                                         
+                                         <span th:unless="${((student.program.securityFee.amount+student.fee.semesterFirst+student.program.admissionFee.amount)-(#aggregates.sum(paymentlistsFirst.![amount]))<=0) }">
+                                        
+                                        <button  onclick="pay_first()" id="payfirst_button"  href="#" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                         </span>
+                                        
+                                         </span>
+                                         <span th:if="${paymentlistsFirst.isEmpty()}">
+                                          <button  onclick="pay_first()" id="payfirst_button" href="#" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                         </span>
+                                    </div>
+                                    <!-- First semester end here... -->
+                                    <!-- Main content end here -->
+
+                                    <!--   Second Semester start -->
+                                    <div class="semester-structure">
+                                        <!-- Second Semester -->
+                                        <hr>
+                                        <h4 class="ml-4 font-weight-bold float-left ml-4 mb-1">Semester II 
+                                        
+                                         
+                                        <i id="paid_sign_second" th:unless="${(student.fee.semesterSecond)>(#aggregates.sum(paymentlistsSecond.![amount]))}"
+                                                class="fa fa-check-circle text-success" style="font-size:19px"
+                                                aria-hidden="true"></i>
+                                                <i id="due_sign_second" th:if="${(student.fee.semesterSecond)>(#aggregates.sum(paymentlistsSecond.![amount]))}"
+                                                
+                                                class="fas fa-exclamation-triangle text-danger" style="font-size:19px"></i>
+                                        
+                                        
+                                        </h4>
+                                        <a th:href="@{'/admin/payment/bill/'+${student.fee.id}+'?semester='+2}" class="btn btn-purple shadow-sm float-right mr-4 mb-1 btn-sm"><i
+                                                class="fas fa-receipt text-white mr-1"></i>
+                                            Bill</a>
+                                    </div>
+                                    <hr>
+                                    <div class="box-body row">
+                                        <div class="col-md-6">
+                                            <div class="flex ml-4 items-fees">
+                                                <div class="semester_fee">
+                                                    <label for="test">Semester Fee:</label>
+                                                    <span class="sp__1">Rs.[[${student.fee.semesterSecond}]]</span>
+                                                </div>
+                                                <div class="checkbox flex-column">
+                                                    <label>Payment Mode: </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="cash_second" name="mode"> Cash
+                                                    </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="voucher_second" name="mode"> Voucher
+                                                    </label>
+                                                </div>
+                                               <div class="form-group" style="display:none" id="form2">
+                                                    <label for="File">File input</label>
+                                                    
+                                                    <input class="ml-5" type="file" id="file_second" name="first_second">
+                                                   
+                                                </div>
+
+                                                <div class="total_fee">
+                                                    <label for="test">Total:</label>
+                                                    <span class="sp__3">Rs.<span id="totaldue_second">[[${student.fee.semesterSecond}]]</span></span>
+                                                </div>
+
+                                                <div class=" form-group amount__form">
+                                                    Amount: <input class="sp__4" type="number" 
+                                                        id="amount_second" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <p>Log:</p>
+                                             <span th:each="payment:${paymentlistsSecond}">	
+                                            <div class="log__dates1 mb-2">
+                                                <p>[[${payment.createdAt}]]</p>
+                                                <p th:if="${payment.mode=='cash'}">
+                                                <a
+                                                        class=" pb_custom"><i	class=" btn btn-success btn-sm mr-3"> Cash</i></a>
+                                                </p>
+                                                <p th:unless="${payment.mode=='cash'}">
+                                                <a
+                                                       class=" pb_custom "><i class="btn btn-success btn-sm ">Voucher</i></a>
+                                                 </p>
+                                                <p>[[${payment.amount}]]</p>
+                                            </div> 
+                                            </span>
+                                            <span id="payment_log_second">
+                                            </span>
+
+                                        <hr>
+
+                                            <div class="due__paid">
+                                             <div class="paid" th:if="${paymentlistsSecond.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_second">0</span></span>
+                                                </div>
+                                               <div class="paid" th:unless="${paymentlistsSecond.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_second">[[${(#aggregates.sum(paymentlistsSecond.![amount]))}]]</span></span>
+                                                </div>
+                                            
+                                                <div class="due" th:if="${paymentlistsSecond.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_second">[[${(student.fee.semesterSecond)}]]</span></span>
+                                                </div>
+                                                     <div class="due" th:unless="${paymentlistsSecond.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_second">[[${(student.fee.semesterSecond)-(#aggregates.sum(paymentlistsSecond.![amount]))}]]</span></span>
+                                                </div>
+                                         
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-for-pay ml-2">
+                                          <span th:if="${paymentlistsSecond.isEmpty()}">
+                                        <button onclick="pay_second()" id="paysecond_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                      
+                                            Pay</button>
+                                      </span>
+                                      <span th:unless="${paymentlistsSecond.isEmpty()}">
+                                      
+                                        <button onclick="pay_second()" id="paysecond_button" th:unless="${(student.fee.semesterSecond)-(#aggregates.sum(paymentlistsSecond.![amount]))<=0}"  class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                           <button onclick="pay_second()" id="paysecond_button" th:if="${(student.fee.semesterSecond)-(#aggregates.sum(paymentlistsSecond.![amount]))<=0}" disabled  class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                      </span>
+                                    </div>
+
+                                    <!-- Second semester end here -->
+                                    
+                              <!--   third Semester start -->
+                                    <div class="semester-structure">
+                                        <!-- Second Semester -->
+                                        <hr>
+                                        <h4 class="ml-4 font-weight-bold float-left ml-4 mb-1">Semester III 
+                                        
+                                         
+                                        <i id="paid_sign_third" th:unless="${(student.fee.semesterThird)>(#aggregates.sum(paymentlistsThird.![amount]))}"
+                                                class="fa fa-check-circle text-success" style="font-size:19px"
+                                                aria-hidden="true"></i>
+                                                <i id="due_sign_third" th:if="${(student.fee.semesterThird)>(#aggregates.sum(paymentlistsThird.![amount]))}"
+                                                
+                                                class="fas fa-exclamation-triangle text-danger" style="font-size:19px"></i>
+                                        
+                                        
+                                        </h4>
+                                        <a th:href="@{'/admin/payment/bill/'+${student.fee.id}+'?semester='+3}" class="btn btn-purple shadow-sm float-right mr-4 mb-1 btn-sm"><i
+                                                class="fas fa-receipt text-white mr-1"></i>
+                                            Bill</a>
+                                    </div>
+                                    <hr>
+                                    <div class="box-body row">
+                                        <div class="col-md-6">
+                                            <div class="flex ml-4 items-fees">
+                                                <div class="semester_fee">
+                                                    <label for="test">Semester Fee:</label>
+                                                    <span class="sp__1">Rs.[[${student.fee.semesterThird}]]</span>
+                                                </div>
+                                                <div class="checkbox flex-column">
+                                                    <label>Payment Mode: </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="cash_third" name="mode"> Cash
+                                                    </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="voucher_third" name="mode"> Voucher
+                                                    </label>
+                                                </div>
+                                               <div class="form-group" style="display:none" id="form3">
+                                                    <label for="File">File input</label>
+                                                    
+                                                    <input class="ml-5" type="file" id="file_third">
+                                                   
+                                                </div>
+
+                                                <div class="total_fee">
+                                                    <label for="test">Total:</label>
+                                                    <span class="sp__3">Rs.<span id="totaldue_third">[[${student.fee.semesterThird}]]</span></span>
+                                                </div>
+
+                                                <div class=" form-group amount__form">
+                                                    Amount: <input class="sp__4" type="number" 
+                                                        id="amount_third" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <p>Log:</p>
+                                             <span th:each="payment:${paymentlistsThird}">	
+                                            <div class="log__dates1 mb-2">
+                                                <p>[[${payment.createdAt}]]</p>
+                                                <p th:if="${payment.mode=='cash'}">
+                                                <a
+                                                        class=" pb_custom"><i	class=" btn btn-success btn-sm mr-3"> Cash</i></a>
+                                                </p>
+                                                <p th:unless="${payment.mode=='cash'}">
+                                                <a
+                                                       class=" pb_custom "><i class="btn btn-success btn-sm ">Voucher</i></a>
+                                                 </p>
+                                                <p>[[${payment.amount}]]</p>
+                                            </div> 
+                                            </span>
+                                            <span id="payment_log_third">
+                                            </span>
+
+                                        <hr>
+
+                                            <div class="due__paid">
+                                             <div class="paid" th:if="${paymentlistsThird.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_third">0</span></span>
+                                                </div>
+                                               <div class="paid" th:unless="${paymentlistsThird.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_third">[[${(#aggregates.sum(paymentlistsThird.![amount]))}]]</span></span>
+                                                </div>
+                                            
+                                                <div class="due" th:if="${paymentlistsThird.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_third">[[${(student.fee.semesterThird)}]]</span></span>
+                                                </div>
+                                                     <div class="due" th:unless="${paymentlistsThird.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_third">[[${(student.fee.semesterThird)-(#aggregates.sum(paymentlistsThird.![amount]))}]]</span></span>
+                                                </div>
+                                         
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-for-pay ml-2">
+                                    <span th:if="${paymentlistsThird.isEmpty()}">
+                                        <button onclick="pay_third()" id="paythird_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                      
+                                            Pay</button>
+                                      </span>
+                                      <span th:unless="${paymentlistsThird.isEmpty()}">
+                                      
+                                        <button onclick="pay_third()"   th:unless="${(student.fee.semesterThird)-(#aggregates.sum(paymentlistsThird.![amount]))<=0}" id="paythird_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                           <button onclick="pay_third()" th:if="${(student.fee.semesterThird)-(#aggregates.sum(paymentlistsThird.![amount]))<=0}" disabled id="paythird_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                      </span>
+                                    </div>
+
+                                    <!-- third semester end here -->
+                                    
+                                     <!--   fourth Semester start -->
+                                    <div class="semester-structure">
+                                        <!-- Second Semester -->
+                                        <hr>
+                                        <h4 class="ml-4 font-weight-bold float-left ml-4 mb-1">Semester IV
+                                        
+                                         
+                                        <i id="paid_sign_fourth" th:unless="${(student.fee.semesterFourth)>(#aggregates.sum(paymentlistsFourth.![amount]))}"
+                                                class="fa fa-check-circle text-success" style="font-size:19px"
+                                                aria-hidden="true"></i>
+                                                <i id="due_sign_fourth" th:if="${(student.fee.semesterFourth)>(#aggregates.sum(paymentlistsFourth.![amount]))}"
+                                                
+                                                class="fas fa-exclamation-triangle text-danger" style="font-size:19px"></i>
+                                        
+                                        
+                                        </h4>
+                                        <a th:href="@{'/admin/payment/bill/'+${student.fee.id}+'?semester='+4}" class="btn btn-purple shadow-sm float-right mr-4 mb-1 btn-sm"><i
+                                                class="fas fa-receipt text-white mr-1"></i>
+                                            Bill</a>
+                                    </div>
+                                    <hr>
+                                    <div class="box-body row">
+                                        <div class="col-md-6">
+                                            <div class="flex ml-4 items-fees">
+                                                <div class="semester_fee">
+                                                    <label for="test">Semester Fee:</label>
+                                                    <span class="sp__1">Rs.[[${student.fee.semesterFourth}]]</span>
+                                                </div>
+                                                <div class="checkbox flex-column">
+                                                    <label>Payment Mode: </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="cash_fourth" name="mode"> Cash
+                                                    </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="voucher_fourth" name="mode"> Voucher
+                                                    </label>
+                                                </div>
+                                               <div class="form-group" style="display:none" id="form4">
+                                                    <label for="File">File input</label>
+                                                    
+                                                    <input class="ml-5" type="file" id="file_fourth">
+                                                   
+                                                </div>
+
+                                                <div class="total_fee">
+                                                    <label for="test">Total:</label>
+                                                    <span class="sp__3">Rs.<span id="totaldue_fourth">[[${student.fee.semesterFourth}]]</span></span>
+                                                </div>
+
+                                                <div class=" form-group amount__form">
+                                                    Amount: <input class="sp__4" type="number" 
+                                                        id="amount_fourth" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <p>Log:</p>
+                                             <span th:each="payment:${paymentlistsFourth}">	
+                                            <div class="log__dates1 mb-2">
+                                                <p>[[${payment.createdAt}]]</p>
+                                                <p th:if="${payment.mode=='cash'}">
+                                                <a
+                                                        class=" pb_custom"><i	class=" btn btn-success btn-sm mr-3"> Cash</i></a>
+                                                </p>
+                                                <p th:unless="${payment.mode=='cash'}">
+                                                <a
+                                                       class=" pb_custom "><i class="btn btn-success btn-sm ">Voucher</i></a>
+                                                 </p>
+                                                <p>[[${payment.amount}]]</p>
+                                            </div> 
+                                            </span>
+                                            <span id="payment_log_fourth">
+                                            </span>
+
+                                        <hr>
+
+                                            <div class="due__paid">
+                                             <div class="paid" th:if="${paymentlistsFourth.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_fourth">0</span></span>
+                                                </div>
+                                               <div class="paid" th:unless="${paymentlistsFourth.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_fourth">[[${(#aggregates.sum(paymentlistsFourth.![amount]))}]]</span></span>
+                                                </div>
+                                            
+                                                <div class="due" th:if="${paymentlistsFourth.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_fourth">[[${(student.fee.semesterFourth)}]]</span></span>
+                                                </div>
+                                                     <div class="due" th:unless="${paymentlistsFourth.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_fourth">[[${(student.fee.semesterFourth)-(#aggregates.sum(paymentlistsFourth.![amount]))}]]</span></span>
+                                                </div>
+                                         
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-for-pay ml-2">
+                                    <button th:if="${paymentlistsFourth.isEmpty()}" onclick="pay_fourth()" id="payfourth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <span th:unless="${paymentlistsFourth.isEmpty()}">
+                                        <button th:unless="${(student.fee.semesterFourth)-(#aggregates.sum(paymentlistsFourth.![amount]))<=0}" onclick="pay_fourth()" id="payfourth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <button th:if="${(student.fee.semesterFourth)-(#aggregates.sum(paymentlistsFourth.![amount]))<=0}" disabled onclick="pay_fourth()" disbaled id="payfourth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                         </span>
+                                    </div>
+
+                                    <!-- fourth semester end here -->
+                                    
+                                      <!--   fifth Semester start -->
+                                    <div class="semester-structure">
+                                        <!-- Second Semester -->
+                                        <hr>
+                                        <h4 class="ml-4 font-weight-bold float-left ml-4 mb-1">Semester V
+                                        
+                                         
+                                        <i id="paid_sign_fifth" th:unless="${(student.fee.semesterFifth)>(#aggregates.sum(paymentlistsFifth.![amount]))}"
+                                                class="fa fa-check-circle text-success" style="font-size:19px"
+                                                aria-hidden="true"></i>
+                                                <i id="due_sign_fifth" th:if="${(student.fee.semesterFifth)>(#aggregates.sum(paymentlistsFifth.![amount]))}"
+                                                
+                                                class="fas fa-exclamation-triangle text-danger" style="font-size:19px"></i>
+                                        
+                                        
+                                        </h4>
+                                        <a th:href="@{'/admin/payment/bill/'+${student.fee.id}+'?semester='+5}" class="btn btn-purple shadow-sm float-right mr-4 mb-1 btn-sm"><i
+                                                class="fas fa-receipt text-white mr-1"></i>
+                                            Bill</a>
+                                    </div>
+                                    <hr>
+                                    <div class="box-body row">
+                                        <div class="col-md-6">
+                                            <div class="flex ml-4 items-fees">
+                                                <div class="semester_fee">
+                                                    <label for="test">Semester Fee:</label>
+                                                    <span class="sp__1">Rs.[[${student.fee.semesterFifth}]]</span>
+                                                </div>
+                                                <div class="checkbox flex-column">
+                                                    <label>Payment Mode: </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="cash_fifth" name="mode"> Cash
+                                                    </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="voucher_fifth" name="mode"> Voucher
+                                                    </label>
+                                                </div>
+                                               <div class="form-group" style="display:none" id="form5">
+                                                    <label for="File">File input</label>
+                                                    
+                                                    <input class="ml-5" type="file" id="file_fifth">
+                                                   
+                                                </div>
+
+                                                <div class="total_fee">
+                                                    <label for="test">Total:</label>
+                                                    <span class="sp__3">Rs.<span id="totaldue_fifth">[[${student.fee.semesterFifth}]]</span></span>
+                                                </div>
+
+                                                <div class=" form-group amount__form">
+                                                    Amount: <input class="sp__4" type="number" 
+                                                        id="amount_fifth" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <p>Log:</p>
+                                             <span th:each="payment:${paymentlistsFifth}">	
+                                            <div class="log__dates1 mb-2">
+                                                <p>[[${payment.createdAt}]]</p>
+                                                <p th:if="${payment.mode=='cash'}">
+                                                <a
+                                                        class=" pb_custom"><i	class=" btn btn-success btn-sm mr-3"> Cash</i></a>
+                                                </p>
+                                                <p th:unless="${payment.mode=='cash'}">
+                                                <a
+                                                       class=" pb_custom "><i class="btn btn-success btn-sm ">Voucher</i></a>
+                                                 </p>
+                                                <p>[[${payment.amount}]]</p>
+                                            </div> 
+                                            </span>
+                                            <span id="payment_log_fifth">
+                                            </span>
+
+                                        <hr>
+
+                                            <div class="due__paid">
+                                             <div class="paid" th:if="${paymentlistsFifth.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_fifth">0</span></span>
+                                                </div>
+                                               <div class="paid" th:unless="${paymentlistsFifth.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_fifth">[[${(#aggregates.sum(paymentlistsFifth.![amount]))}]]</span></span>
+                                                </div>
+                                            
+                                                <div class="due" th:if="${paymentlistsFifth.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_fifth">[[${(student.fee.semesterFifth)}]]</span></span>
+                                                </div>
+                                                     <div class="due" th:unless="${paymentlistsFifth.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_fifth">[[${(student.fee.semesterFifth)-(#aggregates.sum(paymentlistsFifth.![amount]))}]]</span></span>
+                                                </div>
+                                         
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-for-pay ml-2">
+                                    <button th:if="${paymentlistsFifth.isEmpty()}" onclick="pay_fifth()" id="payfifth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <span th:unless="${paymentlistsFifth.isEmpty()}">
+                                        <button th:unless="${(student.fee.semesterFifth)-(#aggregates.sum(paymentlistsFifth.![amount]))<=0}" onclick="pay_fifth()" id="payfifth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <button th:if="${(student.fee.semesterFifth)-(#aggregates.sum(paymentlistsFifth.![amount]))<=0}" disabled onclick="pay_fifth()" disbaled id="payfifth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                         </span>
+                                    </div>
+
+                                    <!-- fifth semester end here -->
+                                    
+                                    <!--   sixth Semester start -->
+                                    <div class="semester-structure">
+                                      
+                                        <hr>
+                                        <h4 class="ml-4 font-weight-bold float-left ml-4 mb-1">Semester VI
+                                        
+                                         
+                                        <i id="paid_sign_sixth" th:unless="${(student.fee.semesterSixth)>(#aggregates.sum(paymentlistsSixth.![amount]))}"
+                                                class="fa fa-check-circle text-success" style="font-size:19px"
+                                                aria-hidden="true"></i>
+                                                <i id="due_sign_sixth" th:if="${(student.fee.semesterSixth)>(#aggregates.sum(paymentlistsSixth.![amount]))}"
+                                                
+                                                class="fas fa-exclamation-triangle text-danger" style="font-size:19px"></i>
+                                        
+                                        
+                                        </h4>
+                                        <a th:href="@{'/admin/payment/bill/'+${student.fee.id}+'?semester='+6}" class="btn btn-purple shadow-sm float-right mr-4 mb-1 btn-sm"><i
+                                                class="fas fa-receipt text-white mr-1"></i>
+                                            Bill</a>
+                                    </div>
+                                    <hr>
+                                    <div class="box-body row">
+                                        <div class="col-md-6">
+                                            <div class="flex ml-4 items-fees">
+                                                <div class="semester_fee">
+                                                    <label for="test">Semester Fee:</label>
+                                                    <span class="sp__1">Rs.[[${student.fee.semesterSixth}]]</span>
+                                                </div>
+                                                <div class="checkbox flex-column">
+                                                    <label>Payment Mode: </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="cash_sixth" name="mode"> Cash
+                                                    </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="voucher_sixth" name="mode"> Voucher
+                                                    </label>
+                                                </div>
+                                               <div class="form-group" style="display:none" id="form6">
+                                                    <label for="File">File input</label>
+                                                    
+                                                    <input class="ml-5" type="file" id="file_sixth">
+                                                   
+                                                </div>
+
+                                                <div class="total_fee">
+                                                    <label for="test">Total:</label>
+                                                    <span class="sp__3">Rs.<span id="totaldue_sixth">[[${student.fee.semesterSixth}]]</span></span>
+                                                </div>
+
+                                                <div class=" form-group amount__form">
+                                                    Amount: <input class="sp__4" type="number" 
+                                                        id="amount_sixth" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <p>Log:</p>
+                                             <span th:each="payment:${paymentlistsSixth}">	
+                                            <div class="log__dates1 mb-2">
+                                                <p>[[${payment.createdAt}]]</p>
+                                                <p th:if="${payment.mode=='cash'}">
+                                                <a
+                                                        class=" pb_custom"><i	class=" btn btn-success btn-sm mr-3"> Cash</i></a>
+                                                </p>
+                                                <p th:unless="${payment.mode=='cash'}">
+                                                <a
+                                                       class=" pb_custom "><i class="btn btn-success btn-sm ">Voucher</i></a>
+                                                 </p>
+                                                <p>[[${payment.amount}]]</p>
+                                            </div> 
+                                            </span>
+                                            <span id="payment_log_sixth">
+                                            </span>
+
+                                        <hr>
+
+                                            <div class="due__paid">
+                                             <div class="paid" th:if="${paymentlistsSixth.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_sixth">0</span></span>
+                                                </div>
+                                               <div class="paid" th:unless="${paymentlistsSixth.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_sixth">[[${(#aggregates.sum(paymentlistsSixth.![amount]))}]]</span></span>
+                                                </div>
+                                            
+                                                <div class="due" th:if="${paymentlistsSixth.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_sixth">[[${(student.fee.semesterSixth)}]]</span></span>
+                                                </div>
+                                                     <div class="due" th:unless="${paymentlistsSixth.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_sixth">[[${(student.fee.semesterSixth)-(#aggregates.sum(paymentlistsSixth.![amount]))}]]</span></span>
+                                                </div>
+                                         
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-for-pay ml-2">
+                                    <button th:if="${paymentlistsSixth.isEmpty()}" onclick="pay_sixth()" id="paysixth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <span th:unless="${paymentlistsSixth.isEmpty()}">
+                                        <button th:unless="${(student.fee.semesterSixth)-(#aggregates.sum(paymentlistsSixth.![amount]))<=0}" onclick="pay_sixth()" id="paysixth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <button th:if="${(student.fee.semesterSixth)-(#aggregates.sum(paymentlistsSixth.![amount]))<=0}" disabled onclick="pay_sixth()" disbaled id="paysixth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                         </span>
+                                    </div>
+
+                                    <!-- sixth semester end here -->
+                    <!--   sixth     <!-- seventh Semester start -->
+                                    <div class="semester-structure">
+                                      
+                                        <hr>
+                                        <h4 class="ml-4 font-weight-bold float-left ml-4 mb-1">Semester VII
+                                        
+                                         
+                                        <i id="paid_sign_seventh" th:unless="${(student.fee.semesterSeventh)>(#aggregates.sum(paymentlistsSeventh.![amount]))}"
+                                                class="fa fa-check-circle text-success" style="font-size:19px"
+                                                aria-hidden="true"></i>
+                                                <i id="due_sign_seventh" th:if="${(student.fee.semesterSeventh)>(#aggregates.sum(paymentlistsSeventh.![amount]))}"
+                                                
+                                                class="fas fa-exclamation-triangle text-danger" style="font-size:19px"></i>
+                                        
+                                        
+                                        </h4>
+                                        <a th:href="@{'/admin/payment/bill/'+${student.fee.id}+'?semester='+7}" class="btn btn-purple shadow-sm float-right mr-4 mb-1 btn-sm"><i
+                                                class="fas fa-receipt text-white mr-1"></i>
+                                            Bill</a>
+                                    </div>
+                                    <hr>
+                                    <div class="box-body row">
+                                        <div class="col-md-6">
+                                            <div class="flex ml-4 items-fees">
+                                                <div class="semester_fee">
+                                                    <label for="test">Semester Fee:</label>
+                                                    <span class="sp__1">Rs.[[${student.fee.semesterSeventh}]]</span>
+                                                </div>
+                                                <div class="checkbox flex-column">
+                                                    <label>Payment Mode: </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="cash_seventh" name="mode"> Cash
+                                                    </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="voucher_seventh" name="mode"> Voucher
+                                                    </label>
+                                                </div>
+                                               <div class="form-group" style="display:none" id="form7">
+                                                    <label for="File">File input</label>
+                                                    
+                                                    <input class="ml-5" type="file" id="file_seventh">
+                                                   
+                                                </div>
+
+                                                <div class="total_fee">
+                                                    <label for="test">Total:</label>
+                                                    <span class="sp__3">Rs.<span id="totaldue_seventh">[[${student.fee.semesterSeventh}]]</span></span>
+                                                </div>
+
+                                                <div class=" form-group amount__form">
+                                                    Amount: <input class="sp__4" type="number" 
+                                                        id="amount_seventh" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <p>Log:</p>
+                                             <span th:each="payment:${paymentlistsSeventh}">	
+                                            <div class="log__dates1 mb-2">
+                                                <p>[[${payment.createdAt}]]</p>
+                                                <p th:if="${payment.mode=='cash'}">
+                                                <a
+                                                        class=" pb_custom"><i	class=" btn btn-success btn-sm mr-3"> Cash</i></a>
+                                                </p>
+                                                <p th:unless="${payment.mode=='cash'}">
+                                                <a
+                                                       class=" pb_custom "><i class="btn btn-success btn-sm ">Voucher</i></a>
+                                                 </p>
+                                                <p>[[${payment.amount}]]</p>
+                                            </div> 
+                                            </span>
+                                            <span id="payment_log_seventh">
+                                            </span>
+
+                                        <hr>
+
+                                            <div class="due__paid">
+                                             <div class="paid" th:if="${paymentlistsSeventh.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_seventh">0</span></span>
+                                                </div>
+                                               <div class="paid" th:unless="${paymentlistsSeventh.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_seventh">[[${(#aggregates.sum(paymentlistsSeventh.![amount]))}]]</span></span>
+                                                </div>
+                                            
+                                                <div class="due" th:if="${paymentlistsSeventh.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_seventh">[[${(student.fee.semesterSeventh)}]]</span></span>
+                                                </div>
+                                                     <div class="due" th:unless="${paymentlistsSeventh.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_seventh">[[${(student.fee.semesterSeventh)-(#aggregates.sum(paymentlistsSeventh.![amount]))}]]</span></span>
+                                                </div>
+                                         
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-for-pay ml-2">
+                                    <button th:if="${paymentlistsSeventh.isEmpty()}" onclick="pay_seventh()" id="payseventh_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <span th:unless="${paymentlistsSeventh.isEmpty()}">
+                                        <button th:unless="${(student.fee.semesterSeventh)-(#aggregates.sum(paymentlistsSeventh.![amount]))<=0}" onclick="pay_seventh()" id="payseventh_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <button th:if="${(student.fee.semesterSeventh)-(#aggregates.sum(paymentlistsSeventh.![amount]))<=0}" disabled onclick="pay_seventh()" disbaled id="payseventh_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                         </span>
+                                    </div>
+
+                                    <!-- seventh semester end here -->
+                <!--   sixth     <!-- seventh Semester start -->
+                                    <div class="semester-structure">
+                                      
+                                        <hr>
+                                        <h4 class="ml-4 font-weight-bold float-left ml-4 mb-1">Semester VIII
+                                        
+                                         
+                                        <i id="paid_sign_eighth" th:unless="${(student.fee.semesterEight)>(#aggregates.sum(paymentlistsEighth.![amount]))}"
+                                                class="fa fa-check-circle text-success" style="font-size:19px"
+                                                aria-hidden="true"></i>
+                                                <i id="due_sign_eighth" th:if="${(student.fee.semesterEight)>(#aggregates.sum(paymentlistsEighth.![amount]))}"
+                                                
+                                                class="fas fa-exclamation-triangle text-danger" style="font-size:19px"></i>
+                                        
+                                        
+                                        </h4>
+                                        <a th:href="@{'/admin/payment/bill/'+${student.fee.id}+'?semester='+8}" class="btn btn-purple shadow-sm float-right mr-4 mb-1 btn-sm"><i
+                                                class="fas fa-receipt text-white mr-1"></i>
+                                            Bill</a>
+                                    </div>
+                                    <hr>
+                                    <div class="box-body row">
+                                        <div class="col-md-6">
+                                            <div class="flex ml-4 items-fees">
+                                                <div class="semester_fee">
+                                                    <label for="test">Semester Fee:</label>
+                                                    <span class="sp__1">Rs.[[${student.fee.semesterEight}]]</span>
+                                                </div>
+                                                <div class="checkbox flex-column">
+                                                    <label>Payment Mode: </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="cash_eighth" name="mode"> Cash
+                                                    </label>
+                                                    <label class="mr-2">
+                                                        <input type="checkbox" id="voucher_eighth" name="mode"> Voucher
+                                                    </label>
+                                                </div>
+                                               <div class="form-group" style="display:none" id="form8">
+                                                    <label for="File">File input</label>
+                                                    
+                                                    <input class="ml-5" type="file" id="file_eighth">
+                                                   
+                                                </div>
+
+                                                <div class="total_fee">
+                                                    <label for="test">Total:</label>
+                                                    <span class="sp__3">Rs.<span id="totaldue_eighth">[[${student.fee.semesterEight}]]</span></span>
+                                                </div>
+
+                                                <div class=" form-group amount__form">
+                                                    Amount: <input class="sp__4" type="number" 
+                                                        id="amount_eighth" placeholder="Enter Amount">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                        <div class="col-md-6">
+                                            <p>Log:</p>
+                                             <span th:each="payment:${paymentlistsEighth}">	
+                                            <div class="log__dates1 mb-2">
+                                                <p>[[${payment.createdAt}]]</p>
+                                                <p th:if="${payment.mode=='cash'}">
+                                                <a
+                                                        class=" pb_custom"><i	class=" btn btn-success btn-sm mr-3"> Cash</i></a>
+                                                </p>
+                                                <p th:unless="${payment.mode=='cash'}">
+                                                <a
+                                                       class=" pb_custom "><i class="btn btn-success btn-sm ">Voucher</i></a>
+                                                 </p>
+                                                <p>[[${payment.amount}]]</p>
+                                            </div> 
+                                            </span>
+                                            <span id="payment_log_eighth">
+                                            </span>
+
+                                        <hr>
+
+                                            <div class="due__paid">
+                                             <div class="paid" th:if="${paymentlistsEighth.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_eighth">0</span></span>
+                                                </div>
+                                               <div class="paid" th:unless="${paymentlistsEighth.isEmpty()}">
+                                                    <label for="test">Paid:</label>
+                                                    <span class="sp__6">Rs.<span id="totalpaid_eighth">[[${(#aggregates.sum(paymentlistsEighth.![amount]))}]]</span></span>
+                                                </div>
+                                            
+                                                <div class="due" th:if="${paymentlistsEighth.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_eighth">[[${(student.fee.semesterEight)}]]</span></span>
+                                                </div>
+                                                     <div class="due" th:unless="${paymentlistsEighth.isEmpty()}">
+                                                    <label for="test">Due:</label>
+                                                    <span class="sp__5">Rs.<span id="semester_due_eighth">[[${(student.fee.semesterEight)-(#aggregates.sum(paymentlistsEighth.![amount]))}]]</span></span>
+                                                </div>
+                                         
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="button-for-pay ml-2">
+                                    <button th:if="${paymentlistsEighth.isEmpty()}" onclick="pay_eighth()" id="payeighth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <span th:unless="${paymentlistsEighth.isEmpty()}">
+                                        <button th:unless="${(student.fee.semesterEight)-(#aggregates.sum(paymentlistsEighth.![amount]))<=0}" onclick="pay_eighth()" id="payeighth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                        <button th:if="${(student.fee.semesterEight)-(#aggregates.sum(paymentlistsEighth.![amount]))<=0}" disabled onclick="pay_eighth()" disbaled id="payeighth_button" class="btn btn-primary shadow-sm ml-4 mb-3"><i
+                                                class="fas fa-money-bill text-white mr-1"></i>
+                                            Pay</button>
+                                         </span>
+                                    </div>
+
+                                    <!-- Eight semester end here -->
+                                    <!-- column end -->
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <!-- End of the page content -->
+                </div>
+            </div>
+        </div>
+        <!--page-content-wrapper -->
+					
+					
+					
+				</div>
+				<!-- container-fluid -->
+			</div>
+		</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+
+	<!-- end js -->
+
+
+</body>
+
+</html>

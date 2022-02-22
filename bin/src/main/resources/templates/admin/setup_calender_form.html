@@ -1,0 +1,140 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Calender Event</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+				<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					<div class="container-fluid px-lg-4">
+                        <div class="row">
+                            <!--    Form start -->
+                            <div class="col-md-12  mt-4">
+                                <div class="card pt-4 pb-2">
+                                    <div class="box box-primary">
+                                        <h1 class="h3 mb-0 text-dark-800 float-left ml-5">Calender Setup</h1>
+                                        <!-- form start -->
+                                        <form class="ml-5 mr-5" role="form" method="post"  th:action="@{'/admin/calendar/save'}" th:object="${calendarList}">
+                                      
+                                        <input type="hidden" th:field="*{yearId}">
+                                  <th:block th:each="calendar ,iStat:*{calenders}">
+                                       <input type="hidden" th:field="*{calenders[__${iStat.index}__].id}">
+                                          <div class="box-body row mt-4">
+                                            <div class="col-md-2">
+                                               
+                                               <div class="form-group">
+                                               <label></label>
+                                                 <select class="form-control mt-2" name="days" th:field="*{calenders[__${iStat.index}__].month}" >
+                                                    <option th:each="month:${listOfMonths}" th:if="${month.id==calendarList.calenders[__${iStat.index}__].month.id}" th:value="${month.id}" >[[${month.name}]]</option>
+                                                 </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>No Of Days</label>
+                                                    <input type="number"  required class="form-control" min="0" th:id="@{'no__day'+${iStat.index}}" placeholder="day" th:field="*{calenders[__${iStat.index}__].noOfDays}"  >
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                              <div class="form-group">
+                                                 <label>Days of Week</label>
+                                                   <select class="form-control" th:name="@{'days__week['+${iStat.count}}+']'" th:field="*{calenders[__${iStat.index}__].week}" >
+                                                     <option th:each="week:${weekList}" th:value="${week.id}">[[${week.name}]]</option>
+                                                  </select>
+                                               </div>
+                                            </div>
+
+                                            <div class="col-md-2">                
+                                              <div class="form-group">
+                                                 <label>English Months</label>
+                                                   <select class="form-control" name="days" th:field="*{calenders[__${iStat.index}__].englishMonth1}" >
+                                                    <option th:each="month:${EnglishMonthList}" th:value="${month.id}" >[[${month.name}]]</option>
+                                                 </select>
+                                               </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>Starting Days</label> 
+                                                    <input type="number" class="form-control" required min="0" th:id="@{'starting__day'+${iStat.index}}" placeholder=" Days" th:field="*{calenders[__${iStat.index}__].startingDayEnglishMonthOne}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <label>Ending Days</label>
+                                                    <input type="number" class="form-control" required min="0" th:id="@{'ending__day'+${iStat.index}}" th:field="*{calenders[__${iStat.index}__].endingDayEnglishMonthOne}" th:onchange="@{'calculate_days('+${iStat.index}+',1)'}">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6"></div>
+                                            <div class="col-md-2">                
+                                                   <select class="form-control" name="days" th:field="*{calenders[__${iStat.index}__].englishMonth2}" >
+                                                       <option th:each="month:${EnglishMonthList}" th:value="${month.id}" >[[${month.name}]]</option>
+                                                 </select>
+                                               </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" required min="0" th:id="@{'starting__day'+${iStat.index}+'2' }" placeholder=" Days" th:field="*{calenders[__${iStat.index}__].startingDayEnglishMonthTwo}">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <div class="form-group">
+                                                    <input type="number" class="form-control" required min="0" th:id="@{'ending__day'+${iStat.index}+'2'}" placeholder=" Days" th:field="*{calenders[__${iStat.index}__].startingDayEnglishMonthTwo}" th:onchange="@{'calculate_days('+${iStat.index}+',2)'}" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                         
+                                </th:block>
+                                            <!-- /.box-body -->
+
+                                            <div class="box-footer mb-5 ml-3">
+                                                <button type="submit" class="btn btn-primary mt-2">Save</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+				<!-- container-fluid -->
+			</div>
+		</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+
+	<!-- end js -->
+
+
+</body>
+
+</html>

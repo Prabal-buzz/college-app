@@ -1,0 +1,148 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+  
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+					
+                      <div class="container-fluid px-lg-4">
+                      <div class="alert alert-danger mt-3" role="alert" th:if="${error!=null}"	th:text="${error}"
+									 ></div>
+					 <div class="alert alert-primary mt-3" role="alert"
+								th:if="${success!=null}"	th:text="${success}" ></div>
+                        <div class="row">
+                      
+                            <!-- column start -->
+                            <div class="col-md-12 mt-3">
+                                <div class="card">
+                                    <div class="container">
+                                    <div class="col-md-12 mt-lg-4 ">
+                                <!-- Page Heading -->
+                                <div class="d-sm-flex align-items-center justify-content-between ">
+                                    <h1 class="h3 mb-0 text-gray-800">Program</h1>
+                                    <a th:href="@{/admin/program-form}"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                            class="fas fa-plus text-white mr-1"></i>
+                                        Add New</a>
+                                </div>
+                            </div>
+                                        <div class="row col-md-12 col-md-offset-2 custyle ">
+                                            <table class="table table-bordered custab ml-4">
+                                                <thead>
+                                                   <tr class="bg-light">
+                                                        <th>SN</th>
+                                                        <th>Name</th>
+                                                        <th class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                               	<tr th:each="program,iStat : ${listPrograms}">
+                                                   <td>[[${iStat.count}]]</td>
+													<td>[[${program.name}]]</td>
+                                                    <td>
+                                                      <center><a th:href="@{/admin/program/update/{id}(id=${program.id})}"> <i class="fa fa-edit btn btn-info btn-sm"></i></a>
+                                                      <a th:href="@{/admin/program/delete/{id}(id=${program.id})}"><i class="fa fa-trash-alt btn btn-danger btn-sm"></i></a></center>
+                                                    </td>
+                                                </tr>
+                                                		<tr th:if="${listPrograms.isEmpty}"  >
+												<th colspan=3 class="text-center">  No Data</th>
+													
+												</tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                      <!--   Second Table -->
+                           
+
+                         <!-- column start -->
+                            <div class="col-md-12 mt-">
+                                <div class="card">
+                                    <div class="container">
+                                     <div class="col-md-12 mt-lg-4 mt-4">
+                                <!-- Page Heading -->
+                                <div class="d-sm-flex align-items-center justify-content-between ">
+                                    <h1 class="h3 mb-0 text-gray-800">Year</h1>
+                                    <a th:href="@{/admin/year-form}"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                            class="fas fa-plus text-white mr-1"></i>
+                                        Add New</a>
+                                </div>
+                            </div>
+                                        <div class="row col-md-12 col-md-offset-2 custyle">
+                                            <table class="table table-bordered custab ml-4">
+                                                <thead>
+                                                   <tr class="bg-light">
+                                                        <th>SN</th>
+                                                        <th>Name</th>
+                                                        <th>Active</th>
+                                                        <th class="text-center">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tr th:each="year,iStat:${listYears}">
+                                                    <td>[[${iStat.count}]]</td>
+                                                    <td>[[${year.name}]]</td>
+                                                    <td>
+                                                    <button type="button" class="btn btn-success btn-sm" th:if="${year.isActive==true}" th:id="@{'active'+${year.id}}" th:onclick="changes([[${year.id}]])">Active</button>
+                                                    <button type="button" class="btn btn-danger btn-sm"th:unless="${year.isActive==true}" th:id="@{'active'+${year.id}}" th:onclick="changes([[${year.id}]])">Passive</button>
+                                                    </td>
+                                                    <!--  <td>
+                                                    <button type="button" class="btn btn-success btn-sm" th:if="${year.isCalender==true}" th:id="@{'calender'+${year.id}}" th:onclick="changeCalender([[${year.id}]])">Show</button>
+                                                    <button type="button" class="btn btn-danger btn-sm"th:unless="${year.isCalender==true}" th:id="@{'calender'+${year.id}}" th:onclick="changeCalender([[${year.id}]])">Disable</button>
+                                                    
+                                                    </td>-->
+                                                    <td>
+                                                      <center><a th:href="@{'/admin/year/update/'+${year.id}}" > <i class="fa fa-edit btn btn-info btn-sm"></i></a>
+                                                      <a th:href="@{'/admin/year/delete/'+${year.id}}" ><i class="fa fa-trash-alt btn btn-danger btn-sm"></i></a></center>
+                                                    </td>
+                                                </tr>
+                                                  		<tr th:if="${listYears.isEmpty}"  >
+												<th colspan=4 class="text-center">  No Data</th>
+													
+												</tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                    </div>
+					<!-- Begin Page Content -->
+				
+					<!-- container-fluid -->
+				</div>
+			</div>
+		</div>
+		<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+
+	<!-- end js -->
+
+
+</body>
+
+</html>

@@ -1,0 +1,209 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Registration Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					<!-- Begin Page Content -->
+					<div class="container-fluid px-lg-4">
+						<div class="row">
+							<div class="col-md-12 mt-lg-4 mt-4">
+								<!-- Page Heading -->
+
+							</div>
+
+							<!--    Form start -->
+							<div class="col-md-12  mt-4">
+								<div class="card">
+								<div class="col-md-4">
+								<a href="javascript://history.go(-1)" class="btn btn-success btn-sm"><i class="fas fa-arrow-left"></i> Back</a>
+								</div>
+									<div class="box box-primary">
+										<div class="box-header">
+											<h3 class="box-title mt-3 ml-5">Student Registration</h3>
+										</div>
+										<!-- form start -->
+										<form class="ml-5 mr-5" role="form" action="" th:action="@{/admin/student/save}" method="post" th:object="${student}">
+											<input type="hidden" th:field="*{id}" th:value="*{id}">
+											
+											<div class="box-body row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputTitle1">First Name</label> <input required
+															type="text" class="form-control" id="exampleInputTitle1"
+															placeholder="First Name" th:field="*{firstName}">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputDate1">Middle Name</label> <input
+															type="text" class="form-control" id="exampleInputDate1"
+															placeholder="Middle Man" th:field="*{middleName}">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputDate1">Last Name</label> <input required
+															type="text" class="form-control" id="exampleInputDate1"
+															placeholder="Last Name" th:field="*{lastName}">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputDes1">Contact</label> 
+														<span th:if="*{id==null}">
+														<input required
+															type="text" class="form-control" id="exampleInputDes1"
+															placeholder="9807590188" th:field="*{contact}">
+													   </span>
+													   <span th:unless="*{id==null}">
+														<input required
+															type="text" disabled class="form-control" id="exampleInputDes1"
+															placeholder="9807590188" th:field="*{contact}">
+															<input type="hidden" value="*{contact}" th:field="*{contact}">
+													   </span>
+															<small style="color:red;font-style:itallic;" th:if="${contactError!=null}" th:text="${contactError}"></small>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputDes1">Email</label> 
+														<span th:if="*{id==null}">
+														<input required
+															type="text" class="form-control" id="exampleInputDes1"
+															placeholder="Email" name="email" th:field="${student.email}">
+														</span>
+														<span th:unless="*{id==null}">
+														<input required
+															type="text" disabled class="form-control" id="exampleInputDes1"
+															placeholder="Email" name="email" th:field="${student.email}">
+															<input type="hidden" value="*{email}" th:field="*{email}">
+															<input type="hidden"  th:field="*{fee.id}">
+														</span>
+															<small style="color:red;font-style:itallic;" th:if="${emailError!=null}" th:text="${emailError}"></small>
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputDes1">D.O.B</label> <input required
+															type="date" class="form-control" id="exampleInputDes1"
+															placeholder="2021-11-4" th:field="*{dob}">
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Registration year</label> 
+														<select th:field="*{registrationyear}"
+															class="form-control" name="semester_id">
+															<option value="0" selected="true" disabled="true">Select
+																Year</option>
+															   <option th:each="year:${listYears}" th:if="${year.isActive==true}" th:value="${year.id}">[[${year.name}]]</option>		
+															   
+														</select>
+													</div>
+												</div>
+												<div class="col-md-6">
+													<div class="form-group">
+														<label>Program</label> <select class="form-control"
+															name="semester_id" th:field="*{program}">
+															<option value="0" selected="true" disabled="true">Select
+																Program</option>
+																<option th:each="program:${listPrograms}"  th:value="${program.id}">[[${program.name}]]
+																</option>
+														</select>
+													</div>
+												</div>
+											
+												<div class="col-md-6">
+													<div class="form-group">
+														<label for="exampleInputDes1">Password</label> 
+														
+														<th:block th:if="${student.id==null}">
+														<input required
+															type="password" class="form-control"
+															id="password" placeholder="password"  name="password" th:field="${student.password}">
+															
+														</th:block>
+														<th:block th:unless="${student.id==null}">
+														
+														<input
+															type="text" class="form-control"
+															id="password" placeholder="password"  name="password" th:field="${student.password}">
+															
+														</th:block>
+														
+															
+													</div>
+												</div>
+
+												<div class="col-md-6">
+													<label>Gender</label>
+													<div class="checkbox flex-column">
+														<label class="mr-2"> <input type="radio"  name="gender" value="male" th:field="*{gender}" checked="true">
+															Male
+														</label> <label class="mr-2"> <input type="radio" name="gender"  value="female" th:field="*{gender}">
+															Female 
+													</div>
+												</div>
+
+
+												<!-- /.box-body -->
+											</div>
+
+											<div class="box-footer center">
+											  <input type="hidden" name="sortField" th:value="${sortField}"> 
+											   <input type="hidden" name="sortDir" th:value="${sortDir}">
+											    <input type="hidden" name="page" th:value="${page}">
+											     <input type="hidden" name="year" th:value="${year}">
+											      <input type="hidden" name="programs" th:value="${program}">
+												<button type="submit" class="btn btn-sm btn-primary  ">Submit</button>
+											</div>
+
+										</form>
+									</div>
+									<!-- /.box -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- container-fluid -->
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<!-- end js -->
+
+
+</body>
+
+</html>

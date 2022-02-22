@@ -1,0 +1,149 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Calender Event</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+				<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					<div class="container-fluid px-lg-4">
+					
+                        <div class="row">
+                            <!-- column start -->
+                            <div class="col-md-12 mt-4">
+                                <div class="card ">
+                            
+                                    <div class="card-body">
+                                    
+											
+                                    
+                                        <h1 class="h3 mb-0 text-dark-800 float-left">Event and Holiday</h1>
+
+                                        <div class="float-right">
+                                            <a th:href="@{'/admin/calender/form'}"
+                                                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                                    class="fas fa-plus text-white mr-1"></i>
+                                                Add Event</a>
+                                                
+                                             
+                                          <!--    <a th:href="@{'/admin/calender/setup'}"
+                                                class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                                                    class="fas fa-plus text-white mr-1"></i>
+                                                SetupCalender</a>-->
+                                        </div>
+
+                                        <!-- column start -->
+                                    <div class="container table-responsive mt-4">
+                                      <form class="row mt-5" method="get" th:action="@{'/admin/calender-event'}">
+                                        
+                                        <div class="col-md-4">
+                                               <div class="form-group">
+                                                 <label>Select Month</label>
+                                                   <select class="form-control" name="month" id="selected__month" >
+                                                     <!--<option value="0" selected="true" disabled="true">Month</option>-->
+                                                     <th:block th:each="month:${listOfMonths}" >
+                                                      <option  th:value="${month.id}"  th:if="${selectedMonth==month.id}"  selected >[[${month.name}]]</option>
+                                                      <option  th:value="${month.id}"  th:if="${selectedMonth!=month.id}"   >[[${month.name}]]</option>
+                                                     </th:block>
+                                                  </select>
+                                                </div>
+                                        </div>
+                                        
+                                          <div class="col-md-4 go_button">
+                                            <button class="btn btn-primary btn-danger" type="submit">GO</button>
+                                        </div>
+                                         
+                                         
+                                          <div class="col-md-12">
+                                            <div class="alert alert-primary mt-3 " role="alert" th:if="${success}" th:text="${success}"
+									  ></div>
+									     </div>
+                                        <table class="table table-bordered table-hover ml-3">
+                                            <thead class="thead-default">
+                                                <tr>
+                                                    
+                                                    <th  scope="col">Day</th>
+                                                    <th width="120">Title</th>
+                                                    <th scope="col">Event</th>
+                                                    <th width="103px" scope="col">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody id="calendar_event_data">
+                                                <tr th:each="item ,iStat:${groupingEventByDay}" >
+                                                    
+                                                    <td>[[${item.key}]]</td>
+                                                    <td>[[${calendarTitleService.findCalendarTitleNameByYearMonthDay(selectedYear,selectedMonth,item.key)}]]</td>
+                                                    <td>
+                                                        <table style="table-layout: fixed;">
+                                                            <tbody>
+                                                             <tr th:each="calendarEvent:${item.value}" class="p-3" >
+                                                             <td><i class="fas fa-check text-success"></i></td> 
+                                                             <td style="width:500px;">  [[${calendarEvent.event}]] </td>
+                                                             
+                                                             <td><a th:href="@{'/admin/calender/form?id='+${calendarEvent.id}}"><i class="fas fa-edit text-info ml-2"></i></a><a th:href="@{'/admin/calendar/event/deleteById?month='+${calendarEvent.month.id} +'&&id='+${calendarEvent.id}}"><i class="text-danger ml-2 far fa-trash-alt"></i></a></td>
+                                                             </tr>
+                                                        
+                                                          </tbody>
+                                                        </table>
+                                                    </td>
+                                                    <td>
+                                                         
+                                                          <a th:href="@{'/admin/calendar/event/deleteByDay?day='+${item.key}+'&&month='+${selectedMonth}}"><i class="fa fa-trash-alt btn btn-danger btn-sm"></i></a>
+                                                          <a th:href="@{'/admin/calendar/title/form?day='+${item.key}+'&&month='+${selectedMonth}}"><i class="fa fa-edit btn btn-primary btn-sm"></i></a>
+                                                    </td>
+                                                </tr>
+                                                <tr th:if="${groupingEventByDay.isEmpty()}">
+                                                <td colspan="3" class="text-center">No Event On This Month</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+               
+                                        
+                                    </form>
+                                 <!-- column end -->
+                                    </div>
+                                </div>
+                            </div>
+                            <!-- column end -->
+                        </div>
+                    </div>
+                </div>
+					
+				</div>
+				<!-- container-fluid -->
+			</div>
+		</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+
+	<!-- end js -->
+
+
+</body>
+
+</html>

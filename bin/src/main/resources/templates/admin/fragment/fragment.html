@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+	<!-- link part -->
+	<th:block th:fragment="css">
+		<meta charset="utf-8">
+		<meta name="viewport"
+			content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+		<!-- Bootstrap CSS -->
+		<link rel="stylesheet"
+			href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+			integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO"
+			crossorigin="anonymous">
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap"
+			rel="stylesheet">
+
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Roboto:wght@300;400;500;700;900&display=swap"
+			rel="stylesheet">
+		<!--fontawesome-->
+		<link rel="stylesheet"
+			href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
+			integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr"
+			crossorigin="anonymous">
+		<!-- global css -->
+		<link rel="stylesheet" th:href="@{/admin/css/global.css}">
+	</th:block>
+	<!-- end link part -->
+	<!-- Sidebar Start -->
+	<nav class="fixed-top align-top toggled" id="sidebar-wrapper"
+		role="navigation" th:fragment="sidebar">
+		<div class="simplebar-content" style="padding: 0px;">
+			<a class="sidebar-brand" href="index.html"> <span
+				class="align-middle font-weight-bold fa-1x text-uppercase">College
+					App</span>
+			</a>
+
+			<ul class="navbar-nav align-self-stretch text-uppercase">
+
+
+				<li  th:if="${#request.userPrincipal.principal.user.role.name=='SUPERADMIN'}" class=""><a class="nav-link  text-left"
+					th:if="${stu_link==null}"  role="button" th:href="@{/admin/student}">
+						<i class="fas fa-images text-white"></i> Student
+				</a> <a class="nav-link  text-left active" th:unless="${stu_link==null}"
+					 role="button" th:href="@{/admin/student}"> <i
+						class="fas fa-images text-white"></i> Student
+				</a>
+				</li>
+						
+				
+				<li class="" th:if="${#request.userPrincipal.principal.user.role.name=='SUPERADMIN'}"><a class="nav-link  text-left"
+					th:if="${po_link==null}"  role="button" th:href="@{/admin/program-year}">
+						<i class="fas fa-images text-white"></i> Program And Year
+				</a> <a class="nav-link  text-left active" th:unless="${po_link==null}"
+					 role="button" th:href="@{/admin/program-year}"> <i
+						class="fas fa-images text-white"></i> Program And Year
+				</a>
+				</li>
+				
+					<li th:if="${#request.userPrincipal.principal.user.role.name=='SUPERADMIN'}" class=""><a class="nav-link  text-left"
+					th:if="${parent_link==null}"  role="button" th:href="@{/admin/parent}">
+						<i class="fas fa-images text-white"></i> Parent
+				</a> <a class="nav-link  text-left active" th:unless="${parent_link==null}"
+					 role="button" th:href="@{/admin/parent}"> <i
+						class="fas fa-images text-white"></i> Parent
+				</a>
+				</li>
+				<li class="" th:if="${#request.userPrincipal.principal.user.role.name=='SUPERADMIN'||#request.userPrincipal.principal.user.role.name=='ADMIN'}"><a class="nav-link   text-left"
+					th:if="${fee_link==null}"  role="button" th:href="@{/admin/fee}">
+						<i class="fas fa-images text-white"></i> Fee
+				</a> <a class="nav-link  text-left active" th:unless="${fee_link==null}"
+					 role="button" th:href="@{/admin/fee}"> <i
+						class="fas fa-images text-white"></i> Fee
+				</a>
+				</li>
+					<li class="" th:if="${#request.userPrincipal.principal.user.role.name=='SUPERADMIN' ||#request.userPrincipal.principal.user.role.name=='ADMIN'}"><a class="nav-link  text-left"
+					th:if="${calender_link==null}"  role="button" th:href="@{/admin/calender-event}" >
+						<i class="fas fa-images text-white"></i> Calender Event
+				</a> <a class="nav-link  text-left active" th:unless="${calender_link==null}"
+					 role="button" th:href="@{/admin/calender-event}"> <i
+						class="fas fa-images text-white"></i> Calender Event
+				</a>
+				</li>
+				
+				<li class="" th:if="${#request.userPrincipal.principal.user.role.name=='SUPERADMIN'||#request.userPrincipal.principal.user.role.name=='TEACHER'}"><a class="nav-link  text-left"
+					th:if="${result_link==null}"  role="button" th:href="@{/admin/result}">
+						<i class="fas fa-images text-white"></i> Result
+				</a> <a class="nav-link  text-left active" th:unless="${result_link==null}"
+					 role="button" th:href="@{/admin/result}"> <i
+						class="fas fa-images text-white"></i> Result
+				</a>
+				</li>
+				
+				
+				<li class=""><a class="nav-link  text-left"
+					th:if="${news_link==null}"  role="button" th:href="@{/admin/newAndAnnouncement}">
+						<i class="fas fa-images text-white"></i> News and Announcement
+				</a> <a class="nav-link  text-left active" th:unless="${news_link==null}"
+					 role="button" th:href="@{/admin/newAndAnnouncement}"> <i
+						class="fas fa-images text-white"></i> News and Announcement
+				</a>
+				</li>
+				
+				<li th:if="${#request.userPrincipal.principal.user.role.name=='SUPERADMIN'||#request.userPrincipal.principal.user.role.name=='ADMIN'}" ><a th:class="${gallery_link}?'nav-link  text-left active':'nav-link  text-left'"
+					: role="button" th:href="@{/admin/gallery}">
+						<i class="fas fa-images text-white"></i>Gallery
+						</a>
+				
+				</li>
+				
+				
+				
+				<li  th:if="${#request.userPrincipal.principal.user.role.name=='SUPERADMIN'} "><a class="nav-link  text-left"
+					th:if="${user_link==null}"  role="button" th:href="@{/admin/user}">
+						<i class="fas fa-images text-white"></i>User
+				</a> <a class="nav-link  text-left active" th:unless="${user_link==null}"
+					 role="button" th:href="@{/admin/user}"> <i
+						class="fas fa-images text-white"></i> User
+				</a>
+				</li>
+				
+			
+			</ul>
+		</div>
+	</nav>
+	<!-- Sidebar-wrapper -->
+	<!-- topbar -->
+	<nav class="navbar navbar-expand navbar-light my-navbar"
+		th:fragment="topbar">
+
+		<!-- Sidebar Toggle (Topbar) -->
+		<div type="button" id="bar"
+			class="nav-icon1 hamburger animated fadeInLeft is-closed"
+			data-toggle="offcanvas">
+			<span></span> <span></span> <span></span>
+		</div>
+
+		<!-- Topbar Navbar -->
+		<ul class="navbar-nav ml-auto">
+			<!-- Nav Item - User Information -->
+			<li class="nav-item dropdown"><a
+				class="nav-link dropdown-toggle" href="#" id="userDropdown"
+				role="button" data-toggle="dropdown"> <span
+					class="mr-2 d-none d-lg-inline text-black-50 font-weight-bold"><!--/*[[${#request.userPrincipal.principal.user.role.name}]]!*/--></span> <img class="img-profile rounded-circle"
+					th:src="@{/admin/images/123.jpg}">
+					 <form th:action="@{/logout}" method="post" class="btn btn-sm">
+                                      <button type="submit" class="btn btn-sm btn-primary">Logout</button>
+                                    </form>
+			</a></li>
+		</ul>
+	</nav>
+	<!-- end of topbar -->
+	   <script th:fragment="js-to-disable">
+	   $('input').on('keypress', function (event) {
+		    var regex = new RegExp("^[a-zA-Z0-9]+$");
+		    var key = String.fromCharCode(!event.charCode ? event.which : event.charCode);
+		    if (!regex.test(key)) {
+		       event.preventDefault();
+		       return false;
+		    }
+		});
+
+	   </script>
+	
+
+	<th:block th:fragment="js">
+		<!-- js link -->
+		<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+			integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+			integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+			crossorigin="anonymous"></script>
+		<script
+			src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+			integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+			crossorigin="anonymous"></script>
+		<script src="https://code.jquery.com/jquery-3.5.1.js"
+			integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc="
+			crossorigin="anonymous"></script>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+		<script th:src="@{/admin/js/main.js}"></script>
+		<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+		
+		<!-- end js link -->
+	</th:block>
+
+</body>
+</html>

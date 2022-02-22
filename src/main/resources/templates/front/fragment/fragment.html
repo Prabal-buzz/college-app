@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<body>
+	
+<!------------------------------------------------------- Header Section start--------------------------------------------------------------------------------------------------------------
+
+ ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- -->
+	
+ <nav class="navbar navbar-expand-lg navbar-light bg-light" th:fragment="header">
+  <a class="navbar-brand font-weight-bold text-uppercase text-white" th:href="@{'/'}">Collage App</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item">
+        <a th:class="${active=='home'}?'nav-link active':'nav-link' " th:href="@{'/'}">Home <span class="sr-only">(current)</span></a>
+      </li>
+      <li class="nav-item">
+        <a   th:class="${active=='news'}?'nav-link active':'nav-link' "  th:href="@{'/newsAndAnnouncement'}">News and Announcement</a>
+      </li>
+     
+      <li class="nav-item">
+        <a th:class="${active=='calendar'}?'nav-link active':'nav-link' " th:href="@{/calendar}">Calender</a>
+      </li>
+
+      <li class="nav-item">
+        <a th:class="${active=='gallery'}?'nav-link active':'nav-link' " th:href="@{/gallery}">Gallery</a>
+      </li>
+       <li class="nav-item">
+        <a th:class="${active=='result'}?'nav-link active':'nav-link' " th:href="@{/result}">Result</a>
+      </li>
+      <li class="nav-item">
+        <a th:class="${active=='fee'}?'nav-link active':'nav-link' " th:href="@{/fee}">Fees</a>
+      </li>
+    </ul>
+
+    
+  </div>
+</nav>
+ <!-- Header Section end -->
+	
+	
+	
+<!------------------------------------------------- footer-------------------------------------------------------------------------------------
+	 
+ -------------------------------------------------------------------------------------------------------------------------------------------- -->
+    <div class="footer pt-5" th:fragment="footer">
+        <div class="container">
+            <div class="row ">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 ">
+                    <div class="ft-logo"><a class="navbar-brand font-weight-bold text-uppercase text-white" href="#">Collage App</a></div>
+                </div>
+            </div>
+            <hr class="footer-line">
+            <div class="row ">
+                <!-- footer-about -->
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
+                    <div class="footer-widget ">
+                        <div class="footer-title">College</div>
+                        <ul class="list-unstyled">
+                            <li><a href="#">About</a></li>
+                            <li><a href="#">Support</a></li>
+                            <li><a href="#">Reception</a></li>
+                            <li><a href="#">Legal & Privacy</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- footer-about -->
+                <!-- footer-links -->
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
+                    <div class="footer-widget ">
+                        <div class="footer-title">Quick Links</div>
+                        <ul class="list-unstyled">
+                            <li><a href="#">News</a></li>
+                            <li><a href="#">Contact us</a></li>
+                            <li><a href="#">FAQ</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-3 col-md-4 col-sm-6 col-6 ">
+                    <div class="footer-widget ">
+                        <div class="footer-title">Social</div>
+                        <ul class="list-unstyled">
+                            <li><a href="#">Twitter</a></li>
+                            <li><a href="#">Google +</a></li>
+                            <li><a href="#">Linked In</a></li>
+                            <li><a href="#">Facebook</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="col-xl-3 col-lg-3 col-md-12 col-sm-6 col-6 ">
+                    <div class="footer-widget ">
+                        <h3 class="footer-title">Subscribe Newsletter</h3>
+                        <form>
+                            <div class="newsletter-form">
+                                <input class="form-control" placeholder="Enter Your Email address" type="text">
+                                <button class="btn btn-danger pr-4 pl-4 btn-sm" type="submit">Subscribe</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+                <!-- footer-links -->
+                <!-- tiny-footer -->
+            </div>
+            <div class="row ">
+                <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 text-center ">
+                    <div class="tiny-footer">
+                        <p>Copyright © All Rights Reserved 2021 | College App</p>
+                    </div>
+                </div>
+                <!--  tiny-footer -->
+            </div>
+        </div>
+    </div>
+    <!-- footer -->
+	
+
+	<th:block th:fragment="js">
+		
+			<script th:src="@{/front/js/main.js}"></script>
+		
+	</th:block>
+
+</body>
+</html>

@@ -1,0 +1,102 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Registration Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					<!-- Begin Page Content -->
+					   <div class="container-fluid px-lg-4">
+                        <div class="row">
+                            <!-- column start -->
+                            <div class="col-md-12 mt-4">
+                              <div class="card mb-4">
+                                  <div class="card-body">
+                                      <h1 class="h3 mb-0 text-dark-800 float-left">Gallery</h1>
+                                        <a th:href="@{/admin/result/form}"
+                                        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm float-right"><i
+                                            class="fas fa-plus text-white mr-1"></i>
+                                        Add New</a>
+                                    <div class="table-responsive ">
+                                      <div class="alert alert-primary mt-3" role="alert" th:if="${success}" th:text="${success}"
+									 ></div>
+                                    <table class="table table-bordered mt-4" id="dataTable" width="100%" cellspacing="0">
+                                        <thead>
+                                            <tr>
+                                                <th>SN</th>
+                                                <th>Program</th>
+                                                <th>Semester</th>
+                                                <th>Term</th>
+                                                 <th>Subject</th>
+                                                <th>Date</th>
+                                                <th style="width: 101px;"> Action </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr th:each="resultCategory,iState :${listOfResulCategories}">
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                               <td></td>
+                                              <td></td>
+                                                <td></td>
+                                                <td>
+                                                  <a href="@{'/admin/result/view/'+${resultCategory.id}}"><i class="fa fa-eye btn btn-info btn-sm"></i></a>
+                                                  <a href="@{'/admin/result/delete/category/'+${resultCategory.id}}"><i class="fa fa-trash-alt btn btn-danger btn-sm"></i></a>
+                                                </td>
+                                            </tr>
+                                             <tr if="${listOfResulCategories.isEmpty()}">
+                                         <td colspan="7"><p class="text-center">No Data Found here....</p></td>
+                                        </tr>
+                                        </tbody>
+
+                                       
+
+                                     </table>
+                                   </div>
+                                 </div>
+                                </div>
+                               </div>
+                                    <!-- column end -->
+                            </div>
+                         </div>
+					<!-- container-fluid -->
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<!-- end js -->
+
+
+</body>
+
+</html>

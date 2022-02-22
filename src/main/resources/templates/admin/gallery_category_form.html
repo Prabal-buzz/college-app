@@ -1,0 +1,108 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Gallery Category Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+ <link rel="stylesheet" th:href="@{admin/css/global.css}">
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					<!-- Begin Page Content -->
+					<div class="container-fluid px-lg-4">
+						<div class="row">
+							<div class="col-md-12 mt-lg-4 mt-4">
+								<!-- Page Heading -->
+
+							</div>
+
+							<!--    Form start -->
+							<div class="col-md-12  mt-4">
+								<div class="card">
+									<div class="box box-primary">
+										<div class="box-header">
+											<h3 class="box-title mt-3 ml-5">Gallery Category</h3>
+										</div>
+										<!-- form start -->
+										<form class="ml-5 mr-5" role="form" action="" th:action="@{/admin/gallery/category/save}" th:object="${galleryCategory}" method="post">
+										
+											<div class="box-body row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="exampleInputTitle1">Category Name</label> <input
+															type="text" class="form-control" id="name"
+															placeholder="Category Name" th:field="*{name}" >
+															<span style="color:red;font-style:itallic;" >[[${nameError}]] </span>
+														
+													</div>
+												</div>
+											
+
+
+												<!-- /.box-body -->
+											</div>
+
+											<div class="box-footer center">
+												<button type="submit" class="btn btn-sm btn-primary  ">Submit</button>
+											</div>
+
+										</form>
+									</div>
+									<!-- /.box -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- container-fluid -->
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+    <input type="hidden" name="url" th:value="@{/program/findbyid}">
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<script src="https://code.jquery.com/jquery-3.1.1.min.js"></script>
+	<script type="text/javascript" src="http://ajax.aspnetcdn.com/ajax/jquery.templates/beta1/jquery.tmpl.min.js"></script>
+		<script>
+	
+	$('#name').keyup(function() {
+	    var search = $('#name').val();
+	    
+	    $.ajax({
+	    type: 'get',
+        url: '/program/findbyid',
+     
+        dataType: "json"
+	    })
+	})
+	
+	</script>
+	<!-- end js -->
+
+
+</body>
+
+</html>

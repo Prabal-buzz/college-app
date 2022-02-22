@@ -1,0 +1,165 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Parents Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					<!-- Begin Page Content -->
+					<div class="container-fluid px-lg-4">
+						<div class="row">
+							<div class="col-md-12 mt-lg-4 mt-4">
+								<!-- Page Heading -->
+
+							</div>
+
+							<!--    Form start -->
+							<div class="col-md-12  mt-4">
+								<div class="card">
+									<div class="box box-primary">
+										<div class="box-header">
+											<h3 class="box-title mt-3 ml-5">Parents Registration</h3>
+										</div>
+										<!-- form start -->
+										<form class="ml-5 mr-5" role="form" action=""
+											th:action="@{/admin/parent/save}" method="post"
+											th:object="${parent}">
+											
+                                           <input type="hidden" th:field="*{id}">
+											<div class="box-body row">
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputTitle1">Father First Name</label>
+														<input type="text" class="form-control"
+															id="exampleInputTitle1" placeholder="First Name"
+															th:field="*{fatherFirstName}">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="fatherMiddleName">Father Middle Name</label> <input
+															type="text" class="form-control" placeholder="Middle Man"
+															th:field="*{fatherMiddleName}">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="fatherLastName">Father Last Name</label> <input
+															type="text" class="form-control" placeholder="Last Name"
+															th:field="*{fatherLastName}">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputDes1">Mother First Name</label> <input
+															type="text" class="form-control" placeholder="First name"
+															th:field="*{motherFirstName}">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="exampleInputDes1">Mother's Middle Name</label>
+														<input type="text" class="form-control"
+															placeholder="Middle name" name="email"
+															th:field="*{motherMiddleName}">
+													</div>
+												</div>
+												<div class="col-md-4">
+													<div class="form-group">
+														<label for="mother_last_name">Mother's last Name</label> <input
+															type="text" class="form-control" placeholder="Last name"
+															th:field="*{motherLastName}">
+													</div>
+												</div>
+												<br> <br>
+
+
+
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="exampleInputDes1">Contact</label>
+
+														
+															<input type="text" class="form-control"
+																placeholder="9807590188 or 550173" name="password"
+																th:field="*{contact}">
+													</div>
+												</div>
+
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="exampleInputDes1">Address</label> <input
+															type="text" class="form-control" id="password"
+															placeholder="banganga,4,kapilvastu" name="password"
+															th:field="*{address}">
+															
+																					
+
+													</div>
+												</div>
+
+
+
+
+												<!-- /.box-body -->
+											</div>
+
+											<div class="box-footer center">
+												<input type="hidden" name="sortField"
+													th:value="${sortField}"> <input type="hidden"
+													name="sortDir" th:value="${sortDir}"> <input
+													type="hidden" name="page" th:value="${page}"> <input
+													type="hidden" name="year" th:value="${year}"> <input
+													type="hidden" name="programs" th:value="${program}">
+													<input type="hidden" name="stu" th:value="${stu}">
+												<button type="submit" class="btn btn-sm btn-primary  ">Save
+													| Update</button>
+											</div>
+
+										</form>
+									</div>
+									<!-- /.box -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- container-fluid -->
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<!-- end js -->
+
+
+</body>
+
+</html>

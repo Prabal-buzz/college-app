@@ -1,0 +1,178 @@
+<!doctype html>
+
+<html xmlns:th="http://www.thymeleaf.org"
+    xmlns:sec="https://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
+<title>Student</title>
+<head>
+    <th:block  th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+<body>
+    <div id="wrapper">
+        <div class="overlay"></div>
+        <!-- Sidebar Start -->
+          <th:block  th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+        <!-- Sidebar-wrapper -->
+
+
+        <!-- Page Content -->
+        <div id="page-content-wrapper" class="toggled">
+            <div id="content">
+
+                <div class="container-fluid p-0 px-lg-0 px-md-0">
+                    <!-- Topbar -->
+                     <th:block  th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+                    <!-- End of Topbar -->
+
+                     <!-- Begin Page Content -->
+                    <div class="container-fluid px-lg-4">
+                        <div class="row">
+                            <div class="col-md-12 mt-lg-4 mt-4">
+                            
+                                <!-- Page Heading -->
+                                <div class="d-sm-flex align-items-center justify-content-between mb-4">
+                                    <h1 class="h3 mb-0 text-gray-800">Student</h1>
+                              
+                                    <a th:href="@{/admin/student/form}" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-plus text-white mr-1"></i> 
+			                         Add New</a>
+                                </div>
+                                <form th:action="@{'/admin/page/'+${currentPage}}" method="get">
+                                  <input type="hidden" name="sortField" th:value="${sortField}">
+                                  <input type="hidden" name="sortDir" th:value="${sortDir}">
+                                  
+                                  <div class="row">
+                                     <div class="col-md-4 ">
+                       
+                                      	<div class="form-group">
+														
+														<select class="form-control"
+															name="year">
+															<option value="0" selected="true" disabled="true">Year</option>
+															<sapan th:each="year:${listyears}">
+															<option 
+																  th:if="${year.isActive==true && year.id==year_id}" th:value="${year.id}" selected>[[${year.name}]]</option>
+															<option
+																th:if="${year.isActive==true}" th:unless="${year.id==year_id}" th:value="${year.id}">[[${year.name}]]</option>
+														 </sapan>
+														</select>
+													</div>
+											
+												</div>
+										<div class="col-md-4">
+													<div class="form-group">
+														  <select class="form-control"
+															name="program">
+															<option value="0" selected="true" disabled="true">Programs</option>
+															<span th:each="program:${listprograms}">
+															<option th:if="${program.id==program_id}"
+																th:value="${program.id}" selected>[[${program.name}]]</option>
+																<option th:unless="${program.id==program_id}"
+																th:value="${program.id}">[[${program.name}]]</option>
+																</span>
+														</select>
+													</div>
+												</div>
+											<div class="col-md-4">
+											  <div class="form-group">
+											     <button type="submit" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i class="fas fa-search text-white mr-1"></i> 
+			                         GO</button>
+							  </div>
+											</div>
+									</div>
+								</from>
+                                	<div class="alert alert-primary" role="alert"
+									th:text="${success}" th:if="${success}"></div>
+								<div class="alert alert-danger" role="alert" th:text="${error}"
+									th:if="${error}"></div>
+                            </div>
+
+                            <!-- column start -->
+                            <div class="col-md-12 ">
+                                <div class="card">
+                                    <div class="table-responsive">
+                                    
+                                        <table class="table v-middle">
+                                            <thead>
+                                                <tr class="bg-light">
+                                                    <th class="border-top-0">SN</th>
+                                                    <th class="border-top-0">Name</th>
+                                                    <th class="border-top-0">contact</th>
+                                                    <th class="border-top-0">Email</th>
+                                                    <th class="border-top-0">Batch</th>
+                                                    <th class="border-top-0">Gender</th>
+                                                    <th class="border-top-0">Program</th>
+                                                    <th class="border-top-0">Action</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr th:each="student,iStat:${listStudents}">
+                                                       
+                                                  
+                                                      <td >[[${(pageSize*(currentPage-1))+iStat.count}]]</td>
+                                                    
+                                                      <td >[[${student.firstName}]]  [[${student.middleName}]]  [[${student.lastName}]]</td>
+                                                      <td>[[${student.contact}]]</td>
+                                                       <td>[[${student.email}]]</td>
+                                                        <td>[[${student.registrationyear.name}]]</td>
+                                                         <td>[[${student.gender}]]</td>
+                                                         <td>[[${student.program.name}]]</td>
+                                                        <td>
+                                                        <a type="button" class="btn btn-success" th:href="@{'/admin/student/update/'+${student.id}+'?page='+${currentPage}+'&sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}"   styel="color:white" ><i class="fas fa-edit"></i></a>
+                                                        <a type="button" class="btn btn-danger"  th:href="@{'/admin/student/delete/'+${student.id}+'?page='+${currentPage}+'&sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}"  styel="color:white"><i class="far fa-trash-alt"></i></a>
+                                                        
+                                                    </td>
+                                                </tr>
+                                                <tr th:if="${listStudents.isEmpty}"  >
+												<th colspan=4 class="text-center">  No Data</th>
+													
+												</tr>
+                                            
+                                            </tbody>
+                                        </table>
+                                         <div class="container">
+                                <hr />
+                                <ul class="pagination pagination-md">
+                                     <span th:if="${currentPage==1}" >
+                                     <li class="page-item disabled"><a class="page-link" href="#">Previous</a></li>
+                                     </span>
+                                     <span th:unless="${currentPage==1}" >
+                                     <li class="page-item"><a class="page-link" th:href="@{'/admin/page/'+${currentPage-1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}">Previous</a></li>
+                                     </span>
+                                    
+                                  	<span th:each="i:${#numbers.sequence(1,totalPages)}">
+                                  	               
+													<li th:if="${i==currentPage}" class="page-item active"><a
+														class="page-link"
+														th:href="@{'/admin/page/'+${i}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}">[[${i}]]</a></li>
+													<li th:unless="${i==currentPage}" th:if="${i!=0}" class="page-item "><a
+														class="page-link"
+														th:href="@{'/admin/page/'+${i}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}">[[${i}]]</a></li>
+												</span>
+                                    <li class="page-item disabled"><a th:unless="${currentPage<totalPages}"  class="page-link disable" href="#">Next</a></li>
+                                    <li class="page-item"><a th:if="${currentPage<totalPages}" th:href="@{'/admin/page/'+${currentPage+1}+'?sortField='+${sortField}+'&sortDir='+${sortDir}+'&year='+${year_id}+'&program='+${program_id}}" class="page-link" href="#">Next</a></li>
+                                </ul>
+                            </div>
+                                        <!-- column end -->
+                                    </div>
+                                </div>
+                            </div>
+                                          
+                        </div>
+                    </div>
+                    <!-- container-fluid -->
+                </div>
+            </div>
+        </div>
+        <!--page-content-wrapper -->
+    </div>
+    <!--wrapper -->
+
+    
+    <!-- js -->
+      <th:block  th:insert="~{admin/fragment/fragment :: js}"></th:block>
+    <!-- end js -->
+    
+
+</body>
+
+</html>

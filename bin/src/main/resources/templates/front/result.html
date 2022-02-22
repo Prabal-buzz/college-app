@@ -1,0 +1,233 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" type="text/css" th:href="@{'/front/css/style.css'}">
+    
+    <title>Collage App</title>
+  </head>
+  <body>
+
+ <!-- ------------------------------------------------------------------- -----------------------------------------------------------------------------------------
+                                             Header Section start
+ ---------------------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+ <th:block th:insert="~{front/fragment/fragment :: header}"></th:block>
+
+ <!---------------------------------------------------------------------------------------------------------------------------------------------------------------------- 
+                                               Header Section end 
+  ------------------------------------------------------------------------------------------------------------------------------------------------------------------------>
+
+<!-- -------------------------------------------------------main part ----------------------------------------------------------
+
+-------------------------------------------------------------------------------------------------------------------->
+
+
+<!--  result section  -->
+<div class="result-page-section section-gaps">
+    <div class="container">
+        <div class="content-wrapper">
+            <div class="main-title">
+                <h3 class="title txt-black mt-5">Result</h3>
+                <p class="txt-black">Enter the form correctly to get your result
+                    Number to View the result
+                    .</p>
+            </div>
+            <form class="result-form" method="post" th:action="@{/result/check}">
+                <div class="row">
+
+                    <div class="col-md-6">
+                        <div class="form-input">
+                            <label for="">
+                                Email
+                            </label>
+                            <div class="input-field">
+                                <input type="email" name="email" required placeholder="Enter your Email Address">
+                            </div>
+                        </div>
+
+                    </div>
+                                        <div class="col-md-6">
+                        <div class="form-input">
+                            <label for="">
+                                Symbol no
+                            </label>
+                            <div class="input-field">
+                                <input type="number" name="symbolno" required placeholder="Enter your Symbolno">
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-input">
+                            <label for="">
+                                Program :
+                            </label>
+
+
+                            <div class="select-icon">
+                                <select name="program" id="">
+                                    
+                                    <option th:each="program:${programList}" th:value="${program.id}">[[${program.name}]]</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-input">
+                            <label for="">
+                                Semester
+                            </label>
+
+
+                            <div class="select-icon">
+                                <select name="semester" id="SemYearId">
+                                   
+                                    <option value="1">FIRST SEMESTER</option>
+                                    <option value="2">SECOND SEMESTER</option>
+                                    <option value="3">THIRD SEMESTER</option>
+                                    <option value="4">FOURTH SEMESTER</option>
+                                    <option value="5">FIFTH SEMESTER</option>
+                                    <option value="6">SIXTH SEMESTER</option>
+                                    <option value="7">SEVENTH SEMESTER</option>
+                                    <option value="8">EIGHTH SEMESTER</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="form-input">
+                            <label for="">
+                                Exam Term : [[${showResult}]]
+                            </label>
+
+
+                            <div class="select-icon">
+                                <select name="term" id="">
+                                    
+
+                                    <option value="1">1st</option>
+                                    <option value="2">2nd</option>
+                                    <option value="3">3rd</option>
+                                      <option value="4">4th</option>
+                                </select>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+                <div class="submit-btn footer_margin">
+                    <input type="submit" value="Check ">
+                </div>
+            </form>
+            <div class="result-layout mb-3 " th:if="${showResult}">
+                <div class="student-info d-flex flex-wrap">
+
+                        <div class="form-input-info student-name d-flex  align-items-center">
+                            <div class="title">
+                                Name :
+                            </div>
+                            <div class="content">
+                                [[${student.firstName}]][[${student.lastName}]]
+                            </div>
+                        </div>
+                      
+                        <div class="form-input-info student-sem d-flex  align-items-center">
+                            <div class="title">
+                               Email  :
+                            </div>
+                            <div class="content">
+                               [[${student.email}]]
+                            </div>
+                        </div>
+                    <div class="form-input-info student-roll d-flex align-items-center">
+                        <div class="title">
+                            Semester :
+                        </div>
+                        <div class="content">
+                         [[${semester}]]
+                        </div>
+                    </div>
+                    <div class="form-input-info student-roll d-flex align-items-center">
+                        <div class="title">
+                            Symbol no :
+                        </div>
+                        <div class="content">
+                        [[${symbolno}]]
+                        </div>
+                    </div>
+                    <div class="form-input-info student-roll d-flex align-items-center">
+                        <div class="title">
+                            Term :
+                        </div>
+                        <div class="content">
+                        [[${term}]]
+                        </div>
+                    </div>
+                </div>
+                <div class="table-responsive ">
+                    <table class="table text-center">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Subject</th>
+                                <th scope="col">Grade</th>
+                                
+                              <th scope="col">Remaks</th>
+                                
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr th:each="result:${studentResult}">
+                                <td><b>[[${result.key}]]</b></td>
+                                <td th:class="${result.value.passMark<=result.value.obtainMark}?'pass text-dark':'Fail text-danger'">[[${result.value.obtainMark}]]</td>
+                               
+                            </tr>
+                            
+                        </tbody>
+                    </table>
+
+                </div>
+              
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--  result section  -->
+                
+
+<!--------------------------------------------------------------------- main part end here --------------------------------------------------------------------------
+   
+ ----------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+
+
+   <!--------------------------------------------------------------------- footer --------------------------------------------------------------------------
+   
+   ----------------------------------------------------------------------------------------------------------------------------------------------------------->
+    
+    <th:block th:insert="~{front/fragment/fragment :: footer}"></th:block>
+    
+    <!-- -------------------------------------------------------------------footer ---------------------------------------------------------------------------
+    
+    ----------------------------------------------------------------------------------------------------------------------------------------------------------->
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  <th:block th:insert="~{front/fragment/fragment :: js}"></th:block>
+  </body>
+</html>

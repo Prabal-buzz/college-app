@@ -1,0 +1,73 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Parents Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+				      <!-- Begin Page Content -->
+                    <div class="container-fluid px-lg-4">
+                        <div class="row">
+                            <!-- column start -->
+                            <div class="col-md-12 mt-4">
+                                <div class="card pb-5">
+                                    <h1 class="text-capitalize text-center mt-4 title-fees">Parents Details</h1>
+                                    <!-- Main content start here -->
+                                <div class="parents__details">
+                                    <div class="main- fees-content  float-left">
+                                        <p class="ml-4">Student Name: <span class="mar__1">[]</span></p>
+                                        <p class="ml-4">Father's Name: <span class="mar__2"> XYZ Rana</span></p>
+                                        <p class="ml-4">Mother's Name: <span class="mar__3">ZXY Rana</span></p>
+                                        <p class="ml-4">Contact: <span class="mar__4">9842312654</span></p>
+                                        <p class="ml-4">Address: <span class="mar__5">Lumbini,Nepal</span></p>
+
+                                    </div>
+                                    <div class="main- fees-content float-right">
+                                        <p class="mr-4">Program: BIT</p>
+                                        <p class="mr-4">Batch: <span class="mar__6">2017</span></p>
+                                    </div>
+                                </div>
+                                <div><p class="float-right mt-5 entered_by mr-4">Entered By:  ABC</p></div>    
+                                </div> <!-- card end -->
+                            </div> <!-- col-md-12 end -->
+                        </div> <!-- row end -->
+                    </div>
+                    <!-- End of the page content -->					
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<!-- end js -->
+
+
+</body>
+

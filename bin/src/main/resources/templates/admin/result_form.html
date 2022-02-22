@@ -1,0 +1,132 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Registration Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					
+                    <!-- Begin Page Content -->
+                    <div class="container-fluid px-lg-4">
+                        <div class="row">
+                            <!--    Form start -->
+                            <div class="col-md-12  mt-4">
+                                <div class="card pt-4 pb-2">
+                                    <div class="box box-primary">
+                                        <h1 class="h3 mb-0 text-dark-800 float-left ml-5">Post Result</h1>
+                                        
+                                        <!-- form start -->
+                                        <form class="ml-5 mr-5" role="form" th:action="@{/admin/result/save}" enctype="multipart/form-data" method="post">
+                                          <div class="box-body row mt-4">
+                                            <div class="col-md-4">
+                                              <div class="form-group">
+                                                 <label>Program</label>
+                                                   <select class="form-control" name="program" >
+                                                     <option value="0" selected="true" disabled="true">Program</option>
+                                                     
+                                                     <option th:each="program:${listOfPrograms}" th:value="${program.id}">[[${program.name}]]</option>
+                                                     
+                                                  </select>
+                                               </div>
+                                            </div>
+
+                                            <div class="col-md-4">                
+                                              <div class="form-group">
+                                                 <label>Semester</label>
+                                                   <select class="form-control" name="semester" required="required">
+                                                     <option value="0" selected="true" disabled="true">Semester</option>
+                                                     <option value="1">1st</option>
+                                                     <option value="2">2nd</option>
+                                                     <option value="3">3rd</option>
+                                                     <option value="4">4th</option>
+                                                     <option value="5">5th</option>
+                                                     <option value="6">6th</option>
+                                                     <option value="7">7th</option>
+                                                  </select>
+                                               </div>
+                                            </div>
+
+                                            <div class="col-md-4">       
+                                              <div class="form-group">
+                                                 <label>Term</label>
+                                                   <select class="form-control" name="term" required>
+                                                     <option value="0" selected="true" disabled="true">Term</option>
+                                                     <option value="1">First</option>
+                                                     <option value="2">Second</option>
+                                                     <option value="3">Third</option>
+                                                     <option value="4">Fourth</option>
+                                                  </select>
+                                               </div>
+                                            </div>
+                                            <div class="col-md-12 ">
+                                                <div class="form-group ">
+                                                <div class="alert alert-danger mt-3" role="alert" th:if="${pro_sem_term!=null}"
+									             th:text="${pro_sem_term}" ></div>
+									            </div>
+									            </div>
+                                             <div class="col-md-12 ">
+                                                <div class="form-group ">
+                                                    <label for="exampleInputFile">Subject</label>
+                                                    <input class="form-control" type="text" required name="subject"  id="subject">
+                                                </div>
+                                            </div>
+
+                                            <div class="col-md-12 ">
+                                                <div class="form-group input__form">
+                                                    <label for="exampleInputFile">Upload File</label>
+                                                    <input class="form-control" type="file" required name="csv"  id="exampleInputFile">
+                                                    <small style="color:red;font-size:15px;margin-left:5px;" th:if="${file_error!=null}" th:text="${file_error}"></small>
+                                                </div>
+                                            </div>
+
+                                            <!-- /.box-body -->
+
+                                            <div class="box-footer mb-5 ml-3">
+                                                <button type="submit" class="btn btn-primary mt-2">Submit</button>
+                                            </div>
+                                        </form>
+                                    </div>
+                                    <!-- /.box -->
+                                </div>
+                            </div>
+                        </div>
+                     </div>
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<!-- end js -->
+
+
+</body>
+
+</html>

@@ -1,0 +1,90 @@
+<!doctype html>
+
+<html xmlns:th="www.thymeleaf.org">
+<title>Student Registration Form</title>
+<head>
+<th:block th:insert="~{admin/fragment/fragment :: css}"></th:block>
+</head>
+ <link rel="stylesheet" th:href="@{admin/css/global.css}">
+
+<body>
+	<div id="wrapper">
+		<div class="overlay"></div>
+		<!-- Sidebar Start -->
+		<th:block th:insert="~{admin/fragment/fragment :: sidebar}"></th:block>
+		<!-- Sidebar-wrapper -->
+
+
+		<!-- Page Content -->
+		<div id="page-content-wrapper" class="toggled">
+			<div id="content">
+
+				<div class="container-fluid p-0 px-lg-0 px-md-0">
+					<!-- Topbar -->
+					<th:block th:replace="~{admin/fragment/fragment :: topbar}"></th:block>
+					<!-- End of Topbar -->
+
+					<!-- Begin Page Content -->
+					<div class="container-fluid px-lg-4">
+						<div class="row">
+							<div class="col-md-12 mt-lg-4 mt-4">
+								<!-- Page Heading -->
+
+							</div>
+
+							<!--    Form start -->
+							<div class="col-md-12  mt-4">
+								<div class="card">
+									<div class="box box-primary">
+										<div class="box-header">
+											<h3 class="box-title mt-3 ml-5">Faculty</h3>
+										</div>
+										<!-- form start -->
+										<form class="ml-5 mr-5" role="form" action="" th:action="@{/faculty/save}" method="post" th:object="${faculty}">
+											 <input type="hidden" th:field="*{id}" th:value="*{id}">
+											<div class="box-body row">
+												<div class="col-md-12">
+													<div class="form-group">
+														<label for="exampleInputTitle1">Faculty Name</label> <input
+															type="text" class="form-control" id="exampleInputTitle1"
+															placeholder="First Name" th:field="*{name}" >
+													</div>
+												</div>
+											
+
+
+												<!-- /.box-body -->
+											</div>
+
+											<div class="box-footer center">
+												<button type="submit" class="btn btn-sm btn-primary  ">Submit</button>
+											</div>
+
+										</form>
+									</div>
+									<!-- /.box -->
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- container-fluid -->
+				</div>
+			</div>
+		</div>
+		<!-- container-fluid -->
+	</div>
+	</div>
+	</div>
+	<!--page-content-wrapper -->
+	</div>
+	<!--wrapper -->
+
+
+	<!-- js -->
+	<th:block th:insert="~{admin/fragment/fragment :: js}"></th:block>
+	<!-- end js -->
+
+
+</body>
+
+</html>
