@@ -8,7 +8,7 @@
 it is mavin project
 ```
 ```
-https://github.com/Jit-Bdr-Rana/collage-app.git
+https://github.com/Prabal-buzz/college-app
 ```
 # 2)Open and create database in localhost xampp with name
 ```
@@ -76,9 +76,3 @@ admin
   https://github.com/Cronic7/Documentation_collegeapp</p>
   
   
-  <p>Special thanks to <a href="https://github.com/anupjungkarki">anup karki</a> for User Interface design 
-  https://github.com/anupjungkarki/College-App-Fontend</p>
-
-  
-  <p>Special thanks to Seazone Joshi for his experties in various field and his guidance</p>
-
